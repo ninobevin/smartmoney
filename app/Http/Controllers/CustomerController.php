@@ -9,10 +9,13 @@ use App\Customer;
 class CustomerController extends Controller
 {
     //
-    public function saveQuickAddCustomer(Request $request)
-    {
+        public function __construct()
+        {
+            $this->middleware('auth');
+        }
         
-        
+        public function saveQuickAddCustomer(Request $request)
+        {
         
         
         $c = new Customer();
@@ -57,6 +60,6 @@ class CustomerController extends Controller
         
         $customer = Customer::find($request->id);
         
-        return view('main.pages.editcustomer');
+        return view('main.pages.editcustomer',['customer'=>$customer]);
     }
 }

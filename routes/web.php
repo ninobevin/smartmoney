@@ -48,4 +48,5 @@ Route::prefix('filter')->group(function () {
 Route::prefix('customer')->group(function () {
     Route::get('saveQuickAddCustomer', 'CustomerController@saveQuickAddCustomer')->name('saveQuickAddCustomer');
     Route::get('edit', 'CustomerController@edit')->name('customeredit');
+    Route::post('edit', 'CustomerController@saveEdit')->name('customer.saveEdit');
 });

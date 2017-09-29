@@ -62,4 +62,36 @@ class CustomerController extends Controller
         
         return view('main.pages.editcustomer',['customer'=>$customer]);
     }
+    public function saveEdit(Request $request)
+    {
+        $customer = Customer::find($request->id);
+
+        $cCount = Customer::where('fname', $request->firstname)
+        ->where('mname', $request->middleinitial)
+        ->where('lastname', $request->lastname)
+        ->where('cust_id','!=',$request->id)
+        ->count();
+
+         if ($cCount) {
+            return "<p class='text-danger'><i class='fa fa-exclamation-triangle'></i> Customer Name is already taken.<p>";
+        }
+        
+        
+        
+    
+
+        $customer->fname = strtoupper($request->firstname);
+        $customer->mname = strtoupper($request->middleinitial);
+        $customer->lastname = strtoupper($request->lastname);
+        $customer->loc_id = $request->address;
+        $customer->dob = $request->dob;
+        $customer->contact = $request->contact;
+        $customer->gender = $request->gender;
+
+
+        $customer->save();
+
+        
+        return view('main.pages.editcustomer',['customer'=>$customer]);
+    }
 }

@@ -72,12 +72,10 @@ class CustomerController extends Controller
         ->where('cust_id','!=',$request->id)
         ->count();
 
-         if ($cCount) {
-            return "<p class='text-danger'><i class='fa fa-exclamation-triangle'></i> Customer Name is already taken.<p>";
-        }
-        
-        
-        
+
+        if($cCount >= 1)
+            return redirect()->back()->with(['error' => 'Duplicate name pls verify. Update not saved','customer' => $customer]);
+
     
 
         $customer->fname = strtoupper($request->firstname);
@@ -92,6 +90,34 @@ class CustomerController extends Controller
         $customer->save();
 
         
-        return view('main.pages.editcustomer',['customer'=>$customer]);
+        return view('main.pages.editcustomer',['customer' => $customer,'message' => 'Update success.']);
     }
+
+    public function search(Request $request)
+    {
+
+
+
+    
+        
+        
+
+        $customer = Customer::find($request->id);
+
+        $cCount = Customer::where('fname', $request->firstname)
+        ->where('mname', $request->middleinitial)
+        ->where('lastname', $request->lastname)
+        ->where('cust_id','!=',$request->id)
+        ->count();
+
+       
+        return $cCount;
+
+        
+         
+           
+    }
+
+
+
 }

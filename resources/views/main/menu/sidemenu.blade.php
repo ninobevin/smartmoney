@@ -47,44 +47,83 @@
         <ul class="sidebar-menu">
           <li class="header">Main Menu</li>
           <!-- Optionally, you can add icons to the links -->
-          <li><a href='{{ route('home') }}'><i class="fa fa-home"></i> <span>Home</span></a></li>
+          <li><a href='{{ url('/home') }}'><i class="fa fa-home"></i> <span>Home</span></a></li>
+          <li class="treeview">
+              <a href="#"><i class="fa fa-envelope-o"></i> <span>Sms</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href='{{ route("sms.inbox") }}'><span>Inbox</span></a></li>
+              </ul>         
+          </li>
+          <li class="treeview">
+              <a href="#"><i class="fa fa-calendar-check-o"></i> <span>Report</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href='{{ route('report.sales') }}'><span>Sales</span></a></li>
+                <li><a href='{{ route('report.account') }}'><span>Account Summary</span></a></li>
+              </ul>         
+          </li>
+          <li class="treeview">
+              <a href="#"><i class="fa fa-gear"></i> <span>System</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href=''><span>Settings</span></a></li>
+                <li><a href=''><span>Profile</span></a></li>
+              </ul>         
+          </li>
 
-          <li><a href=''><i class="fa fa-user"></i> <span>Customers</span></a></li>
-          <li class="treeview">
-            <a href="#"><i class="fa fa-calendar-check-o"></i> <span>Plan</span>
-              <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-            </a>
-            <ul class="treeview-menu">
-              <li><a href=''><span>Monthly Plan</span></a></li>
-              <li><a href=''><span>Misc</span></a></li>
-              
-            </ul>
-          </li>
-          <li class="treeview">
-            <a href="#"><i class="fa fa-book"></i> <span>Billing</span>
-              <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-            </a>
-            <ul class="treeview-menu">
-              <li><a href=''>Generate</a></li>
-              <li><a href=''>SMS</a></li>
-              <li><a href=''>Summary Report</a></li>
-            </ul>
-          </li>
-          <li class="treeview">
-            <a href="#"><i class="fa fa-gears"></i> <span>Settings</span>
-              <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-            </a>
-            <ul class="treeview-menu">
-              <li><a href=''>System</a></li>
-              <li><a href=''>Notifications</a></li>
-            </ul>
-          </li>
+
+        <!--
+            
+            <li><a href=''><i class="fa fa-user"></i> <span>Customers</span></a></li>
+            <li class="treeview">
+              <a href="#"><i class="fa fa-calendar-check-o"></i> <span>Plan</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href=''><span>Monthly Plan</span></a></li>
+                <li><a href=''><span>Misc</span></a></li>
+                
+              </ul>
+            </li>
+            <li class="treeview">
+              <a href="#"><i class="fa fa-book"></i> <span>Billing</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href=''>Generate</a></li>
+                <li><a href=''>SMS</a></li>
+                <li><a href=''>Summary Report</a></li>
+              </ul>
+            </li>
+            <li class="treeview">
+              <a href="#"><i class="fa fa-gears"></i> <span>Settings</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href=''>System</a></li>
+                <li><a href=''>Notifications</a></li>
+              </ul>
+            </li>
+
+
+
+        -->
         </ul>
         <!-- /.sidebar-menu -->
       </section>

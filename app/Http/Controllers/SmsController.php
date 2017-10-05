@@ -21,4 +21,13 @@ class SmsController extends Controller
     	return view('main.pages.smsparse',['sms'=>$sms]);
 
     }
+
+    public function viewInbox(Request $request){
+
+
+    	return view('main.pages.inbox');
+
+
+
+    }
 }

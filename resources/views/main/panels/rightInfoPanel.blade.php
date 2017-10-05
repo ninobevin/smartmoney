@@ -27,3 +27,15 @@
 	</div>
 	<!-- /.box-body -->
 </div>
+<div class="box box-primary no-print">
+	<div class="box-header with-border">
+		<h3 class="box-title">Advertisement</h3>
+	</div>
+	<!-- /.box-header -->
+	<div class="box-body">
+		
+		<img class="img-responsive" src="http://www.lowervillagesurveyco.com/wp-content/uploads/2012/10/Surveying+crew+on+construction+site1.jpg">
+		
+	</div>
+	<!-- /.box-body -->
+</div>

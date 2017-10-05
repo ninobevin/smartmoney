@@ -80,7 +80,11 @@
 					{{ csrf_field() }}
 					<div class="box-footer">
 						<div class="row">
-							<div class="form-group col-md-10" id='saveEditCustomer_response'>{{ @$response[0] }}</div>
+							<div class="form-group col-md-10" id='saveEditCustomer_response'>
+								@if(isset($message))
+									<strong class="text-success">{{ $message }}</strong>
+								@endif
+							</div>
 							<button class="btn btn-primary pull-right col-md-2" value="formEditCustomer" id='btnSave' type="button" data-toggle="modal" data-target="#confirmSaveEditCustomer">Save</button>
 						</div>
 						
@@ -129,7 +133,36 @@
 
 	 		var form =	$('#formtosubmit').val();
 
-	 		$('#' + form).submit();
+
+	 		var id  = $("input[name=id]").val();
+	 		var firstname  = $("input[name=firstname]").val();
+	 		var middleinitial  = $("input[name=middleinitial]").val();
+	 		var lastname  = $("input[name=lastname]").val();
+
+	 	
+
+
+	 	
+	 		
+	 		$.post("{{ route('customer.quicksearch') }}",{
+	 			firstname : firstname,id:id,middleinitial:middleinitial,lastname:lastname },function(data){
+
+	 				
+	 				if(data >= 1)
+
+	 				$("#saveEditCustomer_response").html("<strong class='text-danger'>Name already taken.</strong>");
+
+	 				else
+
+	 				$('#' + form).submit();
+	 				
+	 		});
+
+	 		
+	 		
+
+
+		 	//
 
 	 });
 

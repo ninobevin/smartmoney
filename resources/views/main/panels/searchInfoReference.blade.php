@@ -2,19 +2,33 @@
 
 use \Carbon\Carbon;
 ?>
+
+
 <div class="box box-primary">
 
 
+@if(!$transaction->getStatus && !$transaction->body_sms)	
+	<div class="box-header with-border">
+		<h3 class="box-title">
+			<span class="text-danger"><i class="fa fa-exclamation-triangle"></i> Error</span>
+		</h3>
+	</div>
+
+	<div class="box-body">
+		<p class="text-danger">Sorry, content cannot be displayed. Internal Error encountered. Please contact your administrator.</p>
+	</div>
+
+@else
 
 	<div class="box-header with-border">
-		<h3 class="box-title">Transaction </h3>
+		<h3 class="box-title">Transaction</h3>
 			@if($transaction->getStatus->sm_status_no == 1)
-				<span class="label label-success">{{ $transaction->getStatus->name }}</span>
+				<span class="label label-success">{{ $transaction->getStatus ? $transaction->getStatus->name:null }}</span>
 			@elseif($transaction->getStatus->sm_status_no == 2)
-		<span class="label label-danger">{{ $transaction->getStatus->name }}</span>
-		<span class="text-muted pull-right"> {{ Carbon::parse($transaction->date_claimed)->diffForHumans()  }}</span>
+		<span class="label label-danger">{{ @$transaction->getStatus->name }}</span>
+		<span class="text-muted pull-right"> {{ Carbon::parse(@$transaction->date_claimed)->diffForHumans()  }}</span>
 			@elseif($transaction->getStatus->sm_status_no == 3)
-				<span class="label label-info">{{ $transaction->getStatus->name }}</span>
+				<span class="label label-info">{{ @$transaction->getStatus->name }}</span>
 			@endif
 	</div>
 	<!-- /.box-header -->
@@ -24,7 +38,7 @@ use \Carbon\Carbon;
 	<div class="box-body">
 		<strong>SMS</strong>
 			<p class="text-muted">
-				{{ $transaction->body_sms }}
+				{{ @$transaction->body_sms }}
 			</p>
 		<br>
 		<strong><i class="fa fa-file-text-o margin-r-5"></i> Notes</strong>
@@ -47,4 +61,7 @@ use \Carbon\Carbon;
 		</div>
 	</div>
 	<!-- /.box-body -->
+
+@endif
+
 </div>

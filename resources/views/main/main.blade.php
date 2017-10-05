@@ -133,6 +133,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <!-- Main content -->
       <section class="content" style="padding-bottom: 80px">
 
+
+        @if(Session::has('success_msg'))
+
+          <div class="alert alert-success">
+
+            <i class="fa fa-check"></i> {{ Session::get('success_msg') }}
+          </div>
+
+        @endif
+
+
         @yield('content')
 
         

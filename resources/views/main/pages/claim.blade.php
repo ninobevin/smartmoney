@@ -22,6 +22,7 @@
 				<!-- /.box-header -->
 				<div class="box-body">
 					
+					
 					<strong><i class="fa fa-envelope"></i> Full SMS</strong>
 					<p class="text-muted">
 						 {{ $Transaction->body_sms }}
@@ -116,6 +117,10 @@
       	$.get("{{ route('searchCustomer') }}",{term :ui.item.value},function(data){
 
       			$('#result').html(data);
+
+      			var id = $('#cust_id_selected').val();
+
+      			$('#cust_id_submit').val(id);
       	
       	});
 	}});
@@ -138,24 +143,7 @@
 			console.log("failed");
 		});
 
-	});
-
-	    $( "#searchAddress" ).autocomplete({
-      source:function(request, response) {
-        $.getJSON("{{ route('searchAddress') }}", {term: request.term},
-          response);
-      },
-      select: function(str,ui){
-
-     	$.get("{{ route('searchAddressView') }}",{term :ui.item.value},function(data){
-
-      			$("#quick_address").val(data);
-      	
-      	});
-      	//console.log(str);
-
-	}});
-
+		
 		$('[data-dismiss=modal]').on('click', function (e) {
 		    var $t = $(this),
 		        target = $t[0].href || $t.data("target") || $t.parents('.modal') || [];
@@ -168,6 +156,29 @@
 		       .prop("checked", "")
 		       .end();
 		});
+
+
+	});
+
+	    $( "#searchAddress" ).autocomplete({
+      source:function(request, response) {
+        $.getJSON("{{ route('searchAddress') }}", {term: request.term},
+          response);
+      },
+      select: function(str,ui){
+
+     	$.get("{{ route('searchAddressView') }}",{term :ui.item.value},function(data){
+
+      			$("#quick_address").val(data);
+
+      	
+      	});
+      	//console.log(str);
+
+
+
+
+	}});
 
 
 

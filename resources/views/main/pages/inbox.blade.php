@@ -7,11 +7,12 @@
 @section('content')
 
 
+
 <div class="row">
 	<div class="col-md-8">
 
+	@include('main.panels.inbox');
 
-		
 
 	</div>
 	<div class="col-md-4">
@@ -19,4 +20,21 @@
 	</div>
 </div>
 	
+
+@section('scripts')
+
+<script type="text/javascript">
+
+  $(document).ready(function(){
+
+    
+
+
+  });
+</script>
+@endsection
+
+
+
+
 @endsection

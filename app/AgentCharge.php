@@ -19,4 +19,14 @@ class AgentCharge extends Model
 
 
 
+    public function getCharge($amount){
+
+
+
+    	return AgentCharge::where('amount','>=',$amount)->first();
+
+
+    }
+
+
 }

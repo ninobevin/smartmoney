@@ -82,8 +82,10 @@
 
 
 
+				@if(count($claims) > 0)
 
-				<h3>Claims</h3>
+
+				<h3>Incomming (<i>Claim</i>)</h3>
 
 
 				<div class="row">
@@ -110,7 +112,7 @@
 								<td class="text-left">{{ $transaction->date }}</td>
 								<td class="text-left">{{ $transaction->getAccount->name }}</td>
 								<td class="text-left">{{ $transaction->ref_no }}</td>
-								<td class="text-right">{{ number_format($transaction->amount,2) }}</td>
+								<td class="text-right">{{ number_format($transaction->com,2) }}</td>
 								<td class="text-right">{{ number_format($transaction->amount,2) }}</td>
 								<td class="text-center">
 								{{ @$transaction->customer->getFullName() }}</td>
@@ -121,7 +123,7 @@
 				           
 				           <tr>
 				           	<td colspan="4"></td>
-				           	<td class="text-right"><strong>{{ number_format($claims->sum('amount'),2) }}</strong></td>
+				           	<td class="text-right"><strong>{{ number_format($claims->sum('com'),2) }}</strong></td>
 				           	<td class="text-right"><strong>{{ number_format($claims->sum('amount'),2) }}</strong></td>
 				           	<td class="text-center"></td>
 				           </tr>
@@ -132,8 +134,13 @@
 				         </table>
 				       </div>
 				       <!-- /.col -->
-				     </div>	
-				     <h3>Sent</h3>
+				     </div>
+
+
+				     @endif
+
+				     @if(count($sends) > 0)	
+				     <h3>Outgoing (<i>Sent</i>) </h3>
 
 
 				     <div class="row">
@@ -180,7 +187,19 @@
 				              </table>
 				            </div>
 				            <!-- /.col -->
-				          </div>	
+				          </div>
+				          @endif
+
+
+				          @if( !count($claims) && !count($sends))
+
+
+
+				          	<h1 class="text-muted">No Record Found</h1>
+
+
+
+				          @endif	
 
 				</div>
 			

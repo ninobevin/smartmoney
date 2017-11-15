@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Sms;
 
+use App\Http\Requests\ForcefilterStore;
+
 class SmsController extends Controller
 {
     //
@@ -28,6 +30,25 @@ class SmsController extends Controller
     	return view('main.pages.inbox');
 
 
+
+    }
+    public function forcefilterIndex(Request $request){
+
+
+        $sms = Sms::find(decrypt($request->id));
+
+
+
+        return view('main.pages.forcefilter',['sms'=>$sms]);
+
+    }
+
+    public function forcefilterStore(Request $request){
+
+
+        
+
+        return view('main.pages.forcefilter',['sms'=>$sms]);
 
     }
 }

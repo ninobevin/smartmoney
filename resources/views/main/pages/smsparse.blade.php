@@ -86,7 +86,7 @@ a{
 								</select>
 								<select name="direction"  style="width: 30%" class="form-control">
 									<option value="1">Incoming</option>
-									<option value="1">Outgoing</option>
+									<option value="0">Outgoing</option>
 								</select>
 								
 							</fieldset>

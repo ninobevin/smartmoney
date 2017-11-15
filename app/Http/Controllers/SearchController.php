@@ -114,7 +114,7 @@ class SearchController extends Controller
     				$Customers = Customer::where(DB::raw("CONCAT(fname,' ',mname,'. ',lastname)"),'like',"%".$q."%")->paginate(10);
                      return view('main.pages.searchView',['Customers'=>$Customers]);
                 case '3':
-    		       $Sms = Sms::take(10)->where('body','like',"%".$q."%")->paginate(10);
+    		       $Sms = Sms::take(10)->where('body','like',"%".$q."%")->orderBy('date','desc')->paginate(10);
                     return view('main.pages.searchView',['Sms'=>$Sms]);
     				break;
     		}

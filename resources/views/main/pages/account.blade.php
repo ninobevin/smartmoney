@@ -6,11 +6,8 @@
 @section('content')
 
 
-
 <div class="row">
 	<div class="col-md-12">
-
-
 		<div class="panel panel-default no-print">
 			<div class="panel-heading">
 				<form class="form-inline" action="" method="get">
@@ -24,143 +21,258 @@
 					</div>
 					
 					<button type="submit" class="btn btn-warning btn-flat">Generate</button>
-
 					<span class="text-primary pull-right"> <a data-toggle="collapse" href="#panel_filter">Show Columns</a> <i class="fa fa-arrow-down"></i></span>
+				</form>
+					
+				</div>
+				<div id="panel_filter" class="panel-collapse collapse">
+					<div class="panel-body">
+						
+						
+						<div class="row">
+							@foreach(App\Transaction::getColumnNames() as $t => $k)
+								<div class="form-group col-md-3">
+									
+									<label>
+										<input type="checkbox" class="flat-red" checked>
+									</label>
+									{{ $k->Field }}
+								</div>
+							@endforeach
+						</div>
+					</div>
+					
+				</div>
 			
-			</div>
-			<div id="panel_filter" class="panel-collapse collapse">
-			     <div class="panel-body">
-			     	
-			     	
-			     	<div class="row">
-			     	@foreach(App\Transaction::getColumnNames() as $t => $k)
-
-			     		<div class="form-group col-md-3">
-			     			
-			     			<label>
-			     				<input type="checkbox" class="flat-red" checked>
-			     			</label>
-			     			{{ $k->Field }}
-			     		</div>
-
-
-			     	@endforeach
-
-			     </div>
-
-			     </div>
-			     
-			</div>
-
-			</form>	
 			
 		</div>
-
-
+	</div>
+</div>
+		
+		<div class="invoice">
+			<div class="row">
+				<div class="col-xs-12">
+					<h2 class="page-header">
+					<i class="fa fa-globe"></i> AdminLTE, Inc. 
+					
+					<small class="pull-right">
+					<span class="text-primary">To </span>
+					<i class="text-muted">
+					{{ @$_REQUEST['date_to']?\Carbon\Carbon::parse($_REQUEST['date_to'])->format('F d Y'):\Carbon\Carbon::now()->format('F d Y') }}
+					</i>
+					</small>
+					
+					<small class="pull-right" style="margin-right: 20px;">
+					<span class="text-primary">From </span>
+					<i class="text-muted">{{ @$_REQUEST['date_from']?\Carbon\Carbon::parse($_REQUEST['date_from'])->format('F d Y'):\Carbon\Carbon::now()->format('F d Y') }}
+					</i>
+					</small>
+					
+					</h2>
+				</div>
+				<!-- /.col -->
+			</div>
+			
 
 		
-				<div class="invoice">
-					<div class="row">
-					        <div class="col-xs-12">
-					          <h2 class="page-header">
-					            <i class="fa fa-globe"></i> AdminLTE, Inc.
 
-					            
-
-					            
-					            <small class="pull-right">
-					            	<span class="text-primary">To </span>
-					            	{{ @$_REQUEST['date_to']?\Carbon\Carbon::parse($_REQUEST['date_to'])->format('F d Y'):\Carbon\Carbon::now()->format('F d Y') }}</small>
-					            <small class="pull-right" style="margin-right: 20px;">
-					            	<span class="text-primary">From </span>
-					            	{{ @$_REQUEST['date_from']?\Carbon\Carbon::parse($_REQUEST['date_from'])->format('F d Y'):\Carbon\Carbon::now()->format('F d Y') }}</small>
-
-					          </h2>
-					        </div>
-					        <!-- /.col -->
-					</div>
+			@foreach($accounts as $account)
 
 
-
-
- 
-
-
-
-
-
-
-@if(count($accounts) > 0)
-
-		@foreach($accounts as $account)
+			@if(count($account) > 0)
 
 
 			<h3>{{ @$account->first()->getAccount->name }}</h3>
 			<div class="row">
-			  <div class="col-xs-12 table-responsive">
-							         <table class="table table-striped">
-							           <thead>
-							           <tr>
-							             <th>#</th>
-							             <th class="text-left">Date</th>
-							             <th class="text-left">Reference</th>
-							             <th class="text-center">Status</th>
-							             <th class="text-center">Com</th>
-							             <th class="text-center">Amount</th>
-							             
-							           </tr>
-							           </thead>
-							           <tbody>
+				<div class="col-xs-12 table-responsive">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th class="text-left">Date</th>
+								<th class="text-left">Reference</th>
+								<th class="text-center">Type</th>
+								<th class="text-center">Com</th>
+								<th class="text-center">Amount</th>
+								<th class="text-center">Balance</th>
+								<th class="text-center">Remarks</th>
+							<!--	<th class="text-center">SMS</th> -->
+								
+							</tr>
+						</thead>
+						<tbody>
+
+							<?php 
+
+								$past = 0;
 
 
-				@foreach($account as $transaction)
+								$total_remarks = 0;
+
+							?>
 
 
-				
-					<tr>
-						<td>{{ $loop->iteration }}</td>
-						<td class="text-left">{{ $transaction->date }}</td>
-						<td class="text-left">{{ $transaction->ref_no }}</td>
-						<td class="text-center">
-							{{ $transaction->getStatus->name }}
-						</td>
-						<td class="text-right">{{ number_format($transaction->amount,2) }}</td>
-						<td class="text-right">{{ number_format($transaction->amount,2) }}</td>
-						
-					</tr>
+							@foreach($account as $transaction)
+
+								
+							
+							<tr>
+								<td>{{ $loop->iteration }}</td>
+								<td class="text-left">{{ $transaction->date }}</td>
+								<td class="text-left">{{ $transaction->ref_no }}</td>
+								<td class="text-center">
+									 @if($transaction->direction == 1)
+
+									 	<i class="fa fa-arrow-down bg-success"></i> In
+									 @else
+									 	<i class="fa fa-arrow-up bg-primary"></i> Out
+									 @endif
+								</td>
+								<td class="text-right">{{ number_format($transaction->com,2) }}</td>
+								<td class="text-right">{{ number_format($transaction->amount,2) }}</td>
+								<td class="text-right">{{ number_format($transaction->balance,2) }}</td>
+						<!--		<td class="text-left"><p class="text-muted">{{ $transaction->body_sms }}</p></td> -->
+
+								<!-- Remarks here -->
+								<td class="text-center">
+										
+							<?php			
+									if($transaction->direction == 1 && $loop->iteration > 1){
+
+										$ret =	($past + $transaction->amount + $transaction->com) == $transaction->balance ?  '<i class="fa fa-check bg-success"></i>' : $transaction->balance - ($past + $transaction->amount + $transaction->com);
+
+										$total_remarks += $transaction->balance - ($past + $transaction->amount + $transaction->com);
+
+										echo $ret;
+
+									}elseif($transaction->direction == 0 && $loop->iteration > 1){
+										
+
+										$ret =	($past - $transaction->amount - $transaction->com) == $transaction->balance ?  '<i class="fa fa-check bg-success"></i>' : $transaction->balance - ($past - $transaction->amount - $transaction->com);
+
+										$total_remarks += $transaction->balance - ($past - $transaction->amount - $transaction->com);
+										
+										echo $ret;
+
+								
+									}
+
+							?>
+								</td>
+								
+							</tr>
+							<?php
+
+								$past = $transaction->balance;
+
+							?>
+							@endforeach
+							<tr>
+								<td colspan="4"></td>
+								<td class="text-right"><strong>{{ number_format($account->sum('com'),2) }}</strong></td>
+								<td class="text-right"><strong>{{ number_format($account->sum('amount'),2) }}</strong></td>
+								<td></td>
+								<td class="text-right"><strong>{{ number_format($total_remarks,2) }}</strong></td>
+								
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			
+			@else
 
 
 
 
-				@endforeach
-
-					<tr>
-						<td colspan="3"></td>
-						<td class="text-right"><strong>{{ number_format($account->sum('amount'),2) }}</strong></td>
-						<td class="text-right"><strong>{{ number_format($account->sum('amount'),2) }}</strong></td>
-						<td class="text-center"></td>
-					</tr>
-
-					    </tbody>
-					  </table>
-					</div>
 
 
-					</div>
-
-		@endforeach
+			@endif
 
 
-				
-@endif
 
-				
 
-	
+			@endforeach
 
-	</div>
-	
-</div>
+			@if(@$unidentified)
+
+			<h3>Unidentified</h3>
+			<div class="row">
+				<div class="col-xs-12 table-responsive">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th class="text-left">Date</th>
+								<th class="text-left">Reference</th>
+								<th class="text-center">Type</th>
+								<th class="text-center">Com</th>
+								<th class="text-center">Amount</th>
+								<th class="text-center">Balance</th>
+								
+							<!--	<th class="text-center">SMS</th> -->
+								
+							</tr>
+						</thead>
+						<tbody>
+
+							<?php 
+
+								$past = 0;
+
+							?>
+
+
+							@foreach($unidentified as $ud)
+
+								
+							
+							<tr>
+								<td>{{ $loop->iteration }}</td>
+								<td class="text-left">{{ $ud->date }}</td>
+								<td class="text-left">{{ $ud->ref_no }}</td>
+								<td class="text-center">
+									 @if($ud->direction == '1' )
+
+									 	<i class="fa fa-arrow-down bg-success"></i> In 
+									 @else
+									 	<i class="fa fa-arrow-up bg-primary"></i> Out
+									 @endif
+								</td>
+								<td class="text-right">{{ number_format($ud->com,2) }}</td>
+								<td class="text-right">{{ number_format($ud->amount,2) }}</td>
+								<td class="text-right">{{ number_format($ud->balance,2) }}</td>
+						<!--		<td class="text-left"><p class="text-muted">{{ $ud-> body_sms }}</p></td> -->
+
+								<!-- Remarks here -->
+					
+								
+							</tr>
+							<?php
+
+								$past = $ud->balance;
+
+							?>
+							@endforeach
+							<tr>
+								<td colspan="4"></td>
+								<td class="text-right"><strong>{{ number_format($account->sum('com'),2) }}</strong></td>
+								<td class="text-right"><strong>{{ number_format($account->sum('amount'),2) }}</strong></td>
+								<td></td>
+								
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			@endif
+			
+		
+			
+			
+		</div>
+		
 	
 
 @section('scripts')

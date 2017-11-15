@@ -28,23 +28,31 @@ use \Carbon\Carbon;
 			<p>
 				
 			</p>
-		<hr>
-		<div>
+		
+	
+	<div class="btn-group pull-right">
+		
+		
+		<a href='{{  route("search.filtersms",["id"=>$sms->id]) }}' class="btn btn-primary">Filter </a>
+		<a href='{{  url("search/forcefilterIndex/{".encrypt($sms->id)."}") }}' class="btn btn-warning">Force Filter </a>
+
+
+	</div>
 			
 
-				<form action='{{ route('search.filtersms') }}' method="post">
+			<!--	<form action='{{ route('search.filtersms') }}' method="post"> -->
 					
-					<input type="hidden" name="id" value="{{ $sms->id }}">
+			
 
-					{{ csrf_field() }}
-
-					<button type="submit" class="btn btn-primary pull-right">Filter</button>
-
-				</form>
-
-				
+								
 		
-		</div>
 	</div>
+	
+	<div class="box-footer">
+
+		
+		
+	</div>
+
 	<!-- /.box-body -->
 </div>

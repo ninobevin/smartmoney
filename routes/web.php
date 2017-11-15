@@ -32,7 +32,8 @@ Route::prefix('search')->group(function () {
     Route::get('customer', 'SearchController@searchCustomer')->name('searchCustomer');
     Route::get('searchAddress', 'SearchController@searchAddress')->name('searchAddress');
     Route::get('searchAddressView', 'SearchController@searchAddressView')->name('searchAddressView');
-    Route::post('smsparse', 'SmsController@smsParse')->name('search.filtersms');
+    Route::get('smsparse', 'SmsController@smsParse')->name('search.filtersms');
+    Route::get('forcefilterIndex/{id}', 'SmsController@forcefilterIndex')->name('search.forcefilterIndex');
 });
 Route::prefix('transaction')->group(function () {
     Route::post('claimform', 'TransactionController@claimform')->name('transaction.claimform');

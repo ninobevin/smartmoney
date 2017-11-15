@@ -36,6 +36,8 @@ class TransactionController extends Controller
 
           $ref_no = $request->ref_no;
           $cust_id = $request->cust_id;
+          $account = $request->account;
+          $cash_amount = $request->cash_amount;
 
 
           $t = Transaction::where('ref_no',$ref_no)
@@ -44,7 +46,9 @@ class TransactionController extends Controller
 
 
           $t->cust_id = $cust_id;
+          $t->account = $account;
           $t->status = '2';
+          $t->cash_amount = $cash_amount;
           $t->date_claimed = \Carbon\Carbon::now();
           $t->user_id = Auth::user()->id;
           $t->branch_no = 4;

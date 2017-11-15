@@ -81,14 +81,19 @@ class ReportController extends Controller
                         
 
                     $transaction[] = Transaction::where('account',$account->account_no)
-                    ->whereBetween('date',[Carbon::parse($request->date_from)->startOfDay(),Carbon::parse($request->date_to)->endOfDay()])->orderBy('date')
+                    ->whereBetween('date',[Carbon::parse($request->date_from)->startOfDay(),Carbon::parse($request->date_to)->endOfDay()])->orderBy('date','asc')
                     ->get();    
 
                 }
 
+                    $unidentified = Transaction::whereBetween('date',[Carbon::parse($request->date_from)->startOfDay(),Carbon::parse($request->date_to)->endOfDay()])-> orderBy('date','asc')    
+                    ->whereNull('account')
+                    ->get();  
+
+
                 
 
-                 return view('main.pages.account',['accounts'=>$transaction]);
+                 return view('main.pages.account',['accounts'=>$transaction,'unidentified'=>$unidentified]);
 
             }
 

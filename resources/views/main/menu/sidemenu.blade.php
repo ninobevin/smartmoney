@@ -49,7 +49,7 @@
           <!-- Optionally, you can add icons to the links -->
           <li><a href='{{ url('/home') }}'><i class="fa fa-home"></i> <span>Home</span></a></li>
           <li class="treeview">
-              <a href="#"><i class="fa fa-envelope-o"></i> <span>Sms</span>
+              <a href="#"><i class="fa fa-mobile-phone"></i> <span>Phone</span>
                 <span class="pull-right-container">
                   <i class="fa fa-angle-left pull-right"></i>
                 </span>

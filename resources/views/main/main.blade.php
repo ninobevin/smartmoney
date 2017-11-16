@@ -149,10 +149,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <!-- To the right -->
       <div class="pull-right hidden-xs">
         Open Source Project by Bevin Nino RN <br>
-        <address>version 1.1115</address>
+
       </div>
       <!-- Default to the left -->
       <strong>Copyright &copy; 2016 <a href="#">Merge Online Sys</a>.</strong> All rights reserved.
+       version 1.1115 
     </footer>
     <!-- Control Sidebar -->
 

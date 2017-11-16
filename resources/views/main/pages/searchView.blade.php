@@ -54,9 +54,9 @@
 	{{ $Customers->appends(['search'=>$_REQUEST['search'],'cb_option'=>$_REQUEST['cb_option']])->links() }}
 	@endif
 	@if(isset($Transactions))
-	{{ $Transactions->appends(['search'=>$_REQUEST['search'],'cb_option'=>$_REQUEST['cb_option']])->links() }}
+	{{ $Transactions->appends(['date_to'=>$_REQUEST['date_to'],'date_from'=>$_REQUEST['date_from'],'search'=>$_REQUEST['search'],'cb_option'=>$_REQUEST['cb_option']])->links() }}
 	@endif
 	@if(isset($Sms))
-		{{ $Sms->appends(['search'=>$_REQUEST['search'],'cb_option'=>$_REQUEST['cb_option']])->links() }}
+		{{ $Sms->appends(['date_to'=>$_REQUEST['date_to'],'date_from'=>$_REQUEST['date_from'],'search'=>$_REQUEST['search'],'cb_option'=>$_REQUEST['cb_option']])->links() }}
 	@endif
 @endsection

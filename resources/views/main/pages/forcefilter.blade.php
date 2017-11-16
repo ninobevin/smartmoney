@@ -9,7 +9,7 @@
 
 
 
-<div class="row">
+
 	<div class="col-md-8">
 
 
@@ -35,6 +35,13 @@
 					        </ul>
 					   
 					@endif
+
+					@if (\Session::has('success'))
+					    <div class="alert alert-success">
+					        {!! \Session::get('success') !!}
+					      
+					    </div>
+					@endif
 					
 					<p class="text-warning">
 						Please fill in the necessary data, any input will be verified based on the
@@ -53,7 +60,7 @@
 
 					<div class="row">
 						
-						<form action="" name='formForceFilter' action="{{ url('/search/forcefilter/{'.encrypt($sms->id).'}') }}" id='formForceFilter' method="get">
+						<form method="post" name='formForceFilter' action="{{ url('/search/forceFilterStore/{'.encrypt($sms->id).'}') }}" id='formForceFilter'>
 
 						<input type="hidden" name="sms" value="{{ $sms->body }}">
 						
@@ -146,7 +153,7 @@
 							</div>
 
 							
-
+							{{ csrf_field() }}
 						</form>
 
 					</div>

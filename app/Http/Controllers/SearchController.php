@@ -7,6 +7,7 @@ use App\Transaction;
 use App\Customer;
 use App\Address;
 use App\Sms;
+use Carbon\Carbon;
 class SearchController extends Controller
 {
     /**
@@ -104,7 +105,9 @@ class SearchController extends Controller
     			case '1':
     			     
 
-                    $Transactions = Transaction::take(10)->where('ref_no','like',"%".$q."%")->paginate(10);
+                    $Transactions = Transaction::take(10)->where('ref_no','like',"%".$q."%")
+                   ->whereBetween('date',[Carbon::parse($request->date_from)->startOfDay(),Carbon::parse($request->date_to)->endOfDay()])
+                    ->paginate(10);
                      return view('main.pages.searchView',['Transactions'=>$Transactions]);
 
 
@@ -114,7 +117,11 @@ class SearchController extends Controller
     				$Customers = Customer::where(DB::raw("CONCAT(fname,' ',mname,'. ',lastname)"),'like',"%".$q."%")->paginate(10);
                      return view('main.pages.searchView',['Customers'=>$Customers]);
                 case '3':
-    		       $Sms = Sms::take(10)->where('body','like',"%".$q."%")->orderBy('date','desc')->paginate(10);
+    		       $Sms = Sms::take(10)->where('body','like',"%".$q."%")
+                   ->whereBetween(DB::raw('(date / 1000)'),[Carbon::parse($request->date_from)->startOfDay()->timestamp,Carbon::parse($request->date_to)->endOfDay()->timestamp])
+                   ->orderBy('date','desc')->paginate(10);
+
+                   
                     return view('main.pages.searchView',['Sms'=>$Sms]);
     				break;
     		}

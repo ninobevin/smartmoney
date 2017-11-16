@@ -108,6 +108,13 @@
 
 
 								$total_remarks = 0;
+								$total_remarks_in = 0;
+								$total_remarks_out = 0;
+
+								$total_in = 0;
+								$total_out = 0;
+								$total_com_in = 0;
+								$total_com_out = 0;
 
 							?>
 
@@ -139,20 +146,32 @@
 							<?php			
 									if($transaction->direction == 1 && $loop->iteration > 1){
 
-										$ret =	($past + $transaction->amount + $transaction->com) == $transaction->balance ?  '<i class="fa fa-check bg-success"></i>' : $transaction->balance - ($past + $transaction->amount + $transaction->com);
+										$ret =	($past + $transaction->amount + $transaction->com) == $transaction->balance ?  '<i class="fa fa-check bg-success"></i>' : number_format($transaction->balance - ($past + $transaction->amount + $transaction->com),2);
 
 										$total_remarks += $transaction->balance - ($past + $transaction->amount + $transaction->com);
+
+										$total_remarks_in += $transaction->balance - ($past + $transaction->amount + $transaction->com);
+
+										$total_in += $transaction->amount;
+										$total_com_in += $transaction->com;
 
 										echo $ret;
 
 									}elseif($transaction->direction == 0 && $loop->iteration > 1){
 										
 
-										$ret =	($past - $transaction->amount - $transaction->com) == $transaction->balance ?  '<i class="fa fa-check bg-success"></i>' : $transaction->balance - ($past - $transaction->amount - $transaction->com);
+										$ret =	($past - $transaction->amount - $transaction->com) == $transaction->balance ?  '<i class="fa fa-check bg-success"></i>' :  number_format($transaction->balance - ($past - $transaction->amount - $transaction->com),2);
 
 										$total_remarks += $transaction->balance - ($past - $transaction->amount - $transaction->com);
+
+										$total_remarks_out += $transaction->balance - ($past - $transaction->amount - $transaction->com);
 										
+										$total_out += $transaction->amount;
+
+										$total_com_out += $transaction->com;
+
 										echo $ret;
+
 
 								
 									}
@@ -168,11 +187,19 @@
 							?>
 							@endforeach
 							<tr>
-								<td colspan="4"></td>
-								<td class="text-right"><strong>{{ number_format($account->sum('com'),2) }}</strong></td>
-								<td class="text-right"><strong>{{ number_format($account->sum('amount'),2) }}</strong></td>
+								<td colspan="4" class="text-right">Total <i class="fa fa-arrow-down bg-success"></i> In</td>
+								<td class="text-right"><strong>{{ number_format($total_com_in,2) }}</strong></td>
+								<td class="text-right"><strong>{{ number_format($total_in,2) }}</strong></td>
 								<td></td>
-								<td class="text-right"><strong>{{ number_format($total_remarks,2) }}</strong></td>
+								<td rowspan="2" class="text-right"><strong>{{ number_format($total_remarks,2) }}</strong></td>
+								
+							</tr>
+							<tr>
+								<td colspan="4" class="text-right">Total <i class="fa fa-arrow-up bg-primary"></i> Out</td>
+								<td class="text-right"><strong>{{ number_format($total_com_out,2) }}</strong></td>
+								<td class="text-right"><strong>{{ number_format($total_out,2) }}</strong></td>
+								<td></td>
+								
 								
 							</tr>
 						</tbody>

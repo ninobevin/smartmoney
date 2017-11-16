@@ -18,8 +18,8 @@
                 
                 
                 <label class="label label-primary">Account</label>
-                <select  name="account" class="form-control">
-                  <option disabled selected >--Choose Acct--</option>
+                <select  name="account" class="form-control" required="required">
+                  <option value="" disabled selected >--Choose Acct--</option>
                   
                   @foreach(App\Account::all() as $account)
                       

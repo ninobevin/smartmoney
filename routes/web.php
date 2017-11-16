@@ -23,6 +23,11 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 
+Route::get('/error',function(){
+   return view('errors.accesserror');
+})->name('accessright');
+
+
 Route::get('/test', 'FilterController@test');
 
 
@@ -34,6 +39,7 @@ Route::prefix('search')->group(function () {
     Route::get('searchAddressView', 'SearchController@searchAddressView')->name('searchAddressView');
     Route::get('smsparse', 'SmsController@smsParse')->name('search.filtersms');
     Route::get('forcefilterIndex/{id}', 'SmsController@forcefilterIndex')->name('search.forcefilterIndex');
+    Route::post('forceFilterStore/{id}', 'SmsController@forcefilterStore')->name('search.forceFilterStore');
 });
 Route::prefix('transaction')->group(function () {
     Route::post('claimform', 'TransactionController@claimform')->name('transaction.claimform');

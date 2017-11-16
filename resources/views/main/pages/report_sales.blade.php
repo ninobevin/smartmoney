@@ -95,6 +95,7 @@
 				           <tr>
 				             <th>#</th>
 				             <th class="text-left">Date</th>
+				              <th class="text-left">Claimed</th>
 				             <th class="text-left">Account</th>
 				             <th class="text-left">Reference</th>
 				             <th class="text-center">Com</th>
@@ -110,7 +111,8 @@
 							<tr>
 								<td>{{ $loop->iteration }}</td>
 								<td class="text-left">{{ $transaction->date }}</td>
-								<td class="text-left">{{ $transaction->getAccount->name }}</td>
+								<td class="text-left">{{ $transaction->date_claimed }}</td>
+								<td class="text-left">{{ isset($transaction->getAccount->name)?$transaction->getAccount->name : "Unidentified" }}</td>
 								<td class="text-left">{{ $transaction->ref_no }}</td>
 								<td class="text-right">{{ number_format($transaction->com,2) }}</td>
 								<td class="text-right">{{ number_format($transaction->amount,2) }}</td>
@@ -122,7 +124,7 @@
 				           @endforeach
 				           
 				           <tr>
-				           	<td colspan="4"></td>
+				           	<td colspan="5"></td>
 				           	<td class="text-right"><strong>{{ number_format($claims->sum('com'),2) }}</strong></td>
 				           	<td class="text-right"><strong>{{ number_format($claims->sum('amount'),2) }}</strong></td>
 				           	<td class="text-center"></td>

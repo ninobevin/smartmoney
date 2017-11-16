@@ -12,29 +12,42 @@
           </div>
 
           <div style="padding-left: 5px; color:white;">
-            <label style="padding-top: 5px" >Filter</label>
-            <div class="checkbox">
-              <label>
-                <input  type="radio"  class="flat-green"  name='cb_option' id='cb_option' <?php  if(!isset($_REQUEST['cb_option']) ||  @$_REQUEST['cb_option'] == 1)
-                echo "checked" ?> value="1">
-                Reference Number
-              </label>
+            <label style="padding-top: 5px; padding-right: 5px; cursor: pointer;" data-toggle="collapse" data-target="#filtermenu" >Filter  <i class="fa fa-arrow-circle-down"></i></label>
+            <div id="filtermenu" class="collapse">
+                <div class="checkbox">
+                  <label>
+                    <input  type="radio"  class="flat-green"  name='cb_option' id='cb_option' <?php  if(!isset($_REQUEST['cb_option']) ||  @$_REQUEST['cb_option'] == 1)
+                    echo "checked" ?> value="1">
+                    Reference Number
+                  </label>
+                </div>
+                <div class="checkbox">
+                  <label>
+                    <input  type="radio"  name='cb_option' id='cb_option' <?php if(isset($_REQUEST['cb_option']) &&  $_REQUEST['cb_option'] == 2)
+                    echo "checked" ?>  value="2" >
+                    Customer
+                  </label>
+                </div>
+                <div class="checkbox" >
+                  <label>
+                    <input type="radio"   name='cb_option' id='cb_option' <?php if(isset($_REQUEST['cb_option']) &&  $_REQUEST['cb_option'] == 3)
+                    echo "checked" ?>  value="3" >
+                    Message
+                  </label>
+                </div> 
+                 <p> <i class="fa fa-calendar"></i> From</p>
+             <input type="date" class="form-control input-sm" name="date_from" value="{{ @$_REQUEST['date_from']?$_REQUEST['date_from']:\Carbon\Carbon::now()->subMonths(6)->format('Y-m-d') }}">
+         
+              <p> <i class="fa fa-calendar"></i> To</p>
+             <input type="date" class="form-control input-sm" name="date_to" value="{{ @$_REQUEST['date_from']?$_REQUEST['date_to']:\Carbon\Carbon::now()->format('Y-m-d') }}">    
             </div>
-            <div class="checkbox">
-              <label>
-                <input  type="radio"  name='cb_option' id='cb_option' <?php if(isset($_REQUEST['cb_option']) &&  $_REQUEST['cb_option'] == 2)
-                echo "checked" ?>  value="2" >
-                Customer
-              </label>
-            </div>
-            <div class="checkbox" >
-              <label>
-                <input type="radio"   name='cb_option' id='cb_option' <?php if(isset($_REQUEST['cb_option']) &&  $_REQUEST['cb_option'] == 3)
-                echo "checked" ?>  value="3" >
-                Message
-              </label>
-            </div>
+        
+          
+             
           </div>
+         
+         
+
 
         </form>
 

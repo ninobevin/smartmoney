@@ -6,14 +6,26 @@ use Illuminate\Http\Request;
 
 use App\Sms;
 
+
 use App\Http\Requests\ForcefilterStore;
 
 class SmsController extends Controller
 {
     //
 
+
+    public function __construct(){
+
+        $this->middleware('accessright');
+
+    }
+
+
     public function smsParse(Request $request){
 
+
+
+      
 
 
 
@@ -35,7 +47,12 @@ class SmsController extends Controller
     public function forcefilterIndex(Request $request){
 
 
+
+
         $sms = Sms::find(decrypt($request->id));
+
+
+     
 
 
 
@@ -46,9 +63,37 @@ class SmsController extends Controller
     public function forcefilterStore(Request $request){
 
 
+          
+
+
+     
+           
+         if( strpos($request->sms,$request->ref_no) === false){
+
+            $err[] = 'Reference not found' ;
+
+
+         }
+
+         if(strpos($request->sms,$request->amount) === false){
+
+            $err[] = 'Amount not found' ;
+            
+
+         }
+
+
+
+
+         if(isset($err)){
+
+            return redirect()->back()->withErrors($err);
+
+         }else {
+            return redirect()->back()->with('success', 'Transaction verified.'); 
+         }
+
+
         
-
-        return view('main.pages.forcefilter',['sms'=>$sms]);
-
     }
 }

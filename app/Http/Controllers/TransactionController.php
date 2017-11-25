@@ -4,17 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Transaction;
-
 use Illuminate\Support\Facades\Auth;
 
 
 class TransactionController extends Controller
 {
     //
-        public function __construct()
-    {
-        $this->middleware('auth');
-    }
+       public function __construct()
+      {
+          $this->middleware('auth');
+          $this->middleware('accessbranch');
+      }
 
 
 
@@ -57,7 +57,7 @@ class TransactionController extends Controller
 
           \Session::flash('success_msg','Transaction successful');
 
-          return redirect('/home')->with(['success'=>'Transaction completed.']);
+          return redirect('/home');
 
     }
 }

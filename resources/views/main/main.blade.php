@@ -11,6 +11,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>{{ config('app.name') }}</title>
   <!-- Tell the browser to be responsive to screen width -->
+  <link rel="icon" href="{!! asset('images/mergesmsicon.png') !!}"/>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
   @include('main.sources.css')
@@ -148,7 +149,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <footer class="main-footer">
       <!-- To the right -->
       <div class="pull-right hidden-xs">
-        Open Source Project by Bevin Nino RN <br>
+        <?php
+
+          //\Illuminate\Support\Facades\Cookie::queue('mergeonline','1234',2628000);
+
+        ?>
+
+
+        Open Source Project by Bevin Nino RN  <br>
 
       </div>
       <!-- Default to the left -->
@@ -177,6 +185,31 @@ fixed layout. -->
 <script src='{{ asset("dist/js/app.min.js")}}'></script>
 <script src='{{asset("plugins/jQuery/mark.min.js")}}'></script>
 <script src='{{ asset("bootstrap/js/typeahead.js")}}'></script>
+<script type="text/javascript" src="{{ asset('plugins/iCheck/icheck.min.js')}}">
+  
+</script>
+<script type="text/javascript">
+  
+
+  //iCheck for checkbox and radio inputs
+  $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+    checkboxClass: 'icheckbox_minimal-blue',
+    radioClass   : 'iradio_minimal-blue'
+  })
+  //Red color scheme for iCheck
+  $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
+    checkboxClass: 'icheckbox_minimal-red',
+    radioClass   : 'iradio_minimal-red'
+  })
+  //Flat red color scheme for iCheck
+  $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+    checkboxClass: 'icheckbox_flat-green',
+    radioClass   : 'iradio_flat-green'
+  })
+
+
+
+</script>
 @yield('scripts')
 <script type="text/javascript">
 
@@ -215,6 +248,7 @@ fixed layout. -->
     background: yellow;
     color: black;
   }
+
 </style>
 </body>
 </html>

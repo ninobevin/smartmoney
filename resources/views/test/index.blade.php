@@ -28,12 +28,16 @@
 
 <?php
 
-echo 'ddf';
+
+    Auth::logout();
+
+//\Illuminate\Support\Facades\Cookie::queue('mergelove','1234',2628000);
+
 
 ?>
     <div class="login">
       <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="{{ route('login') }}">
+                    <form class="form-horizontal" name="loginform" method="POST" action="{{ route('login') }}">
                         {{ csrf_field() }}
 
 
@@ -51,7 +55,7 @@ echo 'ddf';
                         <div class="form-group">
                            
                             <div class="col-md-6">
-                                <input id="email" type="text" placeholder="User" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
+                                <input id="email" type="text" placeholder="Username / Email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
 
                               
                             </div>

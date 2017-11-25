@@ -6,6 +6,13 @@
 @endsection
 @section('content')
 
+<style type="text/css">
+	#videoElement {
+    width: 500px;
+    height: 375px;
+    background-color: #666;
+}
+</style>
 
 <div class="row">
 	<div class="col-md-8">
@@ -19,6 +26,30 @@
 
 	@endif
 
+	
+
+			<ul>
+				<li>{{ $_SERVER['SERVER_ADDR'] }}</li>
+				<li>{{ $_SERVER['SERVER_PORT'] }}</li>
+				<li>{{ $_SERVER['REMOTE_ADDR'] }}</li>
+				<li><?php
+
+					$branch_details = new  App\library\Application;
+					
+					 dump($branch_details::COMPANY_NAME);
+				 ?></li>
+					
+			</ul>
+			
+			
+			
+
+		<h1>{{ Cookie::get('branchname') }}</h1>
+
+
+<img src="">
+		
+
 
 		
 
@@ -27,5 +58,9 @@
 		@include('main.panels.rightInfoPanel')
 	</div>
 </div>
+
+
+
+
 	
 @endsection

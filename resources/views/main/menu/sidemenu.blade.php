@@ -4,7 +4,7 @@
         <!-- search form (Optional) -->
         <form  method="get" id='searchForm' action="{{ route('view') }}" class="sidebar-form">
           <div class="input-group">
-            <input type="text" autocomplete="off"  name='search' data-provide="typeahead" id='search' class="form-control"  placeholder="Search...">
+            <input type="text" autocomplete="off"   name='search' data-provide="typeahead" id='search' class="form-control" value="{{ @$_REQUEST['search'] }}" placeholder="Search...">
             <span class="input-group-btn">
               <button type="submit"   class="btn btn-flat"><i class="fa fa-search"></i>
               </button>
@@ -20,7 +20,55 @@
                     echo "checked" ?> value="1">
                     Reference Number
                   </label>
+                   
+
+                  <label style="margin-left: 10px">
+                    <input type="checkbox" name="status[]" value="1" class="minimal-red" 
+                      <?php
+
+                        echo (@in_array("1",@$_REQUEST['status'])
+                        )? "checked" : ""; 
+
+                        if(!isset($_REQUEST['status'])){
+                          echo "checked";
+                        }
+
+                      ?>
+                    >
+                    Pending
+                    <br>
+                    <input type="checkbox" name="status[]" value="2"  class="minimal-red" 
+                      <?php
+
+                        echo (@in_array("2",$_REQUEST['status'])
+                        )? "checked" : ""; 
+
+                        if(!isset($_REQUEST['status'])){
+                          echo "checked";
+                        }
+                      ?>
+                    >
+                    Claimed
+                     <br>
+                    <input type="checkbox" name="status[]" value="3"  class="minimal-red" 
+                      <?php
+
+                        echo (@in_array("3",@$_REQUEST['status'])
+                        )? "checked" : ""; 
+
+                        if(!isset($_REQUEST['status'])){
+                          echo "checked";
+                        }
+
+                      ?>
+
+                    >
+                    Send
+                  </label>
+
                 </div>
+
+
                 <div class="checkbox">
                   <label>
                     <input  type="radio"  name='cb_option' id='cb_option' <?php if(isset($_REQUEST['cb_option']) &&  $_REQUEST['cb_option'] == 2)

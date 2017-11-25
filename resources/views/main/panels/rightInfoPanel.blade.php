@@ -13,7 +13,7 @@
 		<h5><span class="label label-danger">Claimed</span></h5>
 		<p class="text-muted">
 			{{  App\Transaction::where(['status'=>'2'])
-			->whereDate('date',DB::raw('curdate()'))
+			->whereDate('date_claimed',DB::raw('curdate()'))
 			->sum('amount')  }} 
 		</p>
 		<h5><span class="label label-primary">Sent</span></h5>

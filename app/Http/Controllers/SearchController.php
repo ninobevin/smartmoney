@@ -18,6 +18,7 @@ class SearchController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('accessbranch');
     }
 
     /**
@@ -104,25 +105,35 @@ class SearchController extends Controller
     		switch ($request->cb_option) {
     			case '1':
     			     
+                    if(count($request->status) <= 0){
+
+                     
+                        return view('main.pages.searchView',['error' => 'Please select any type of transaction (Send,Pending or Claimed)']);
+
+                    }
 
                     $Transactions = Transaction::take(10)->where('ref_no','like',"%".$q."%")
+                    ->whereIn('status',$request->status)
                    ->whereBetween('date',[Carbon::parse($request->date_from)->startOfDay(),Carbon::parse($request->date_to)->endOfDay()])
                     ->paginate(10);
-                     return view('main.pages.searchView',['Transactions'=>$Transactions]);
+
+                     return view('main.pages.searchView',['Transactions'=>$Transactions , 
+
+                                                         'result' => $Transactions]);
 
 
     				break;
     			case '2':
     				    			
     				$Customers = Customer::where(DB::raw("CONCAT(fname,' ',mname,'. ',lastname)"),'like',"%".$q."%")->paginate(10);
-                     return view('main.pages.searchView',['Customers'=>$Customers]);
+                     return view('main.pages.searchView',['Customers'=>$Customers, 'result' => $Customers]);
                 case '3':
     		       $Sms = Sms::take(10)->where('body','like',"%".$q."%")
                    ->whereBetween(DB::raw('(date / 1000)'),[Carbon::parse($request->date_from)->startOfDay()->timestamp,Carbon::parse($request->date_to)->endOfDay()->timestamp])
                    ->orderBy('date','desc')->paginate(10);
 
                    
-                    return view('main.pages.searchView',['Sms'=>$Sms]);
+                    return view('main.pages.searchView',['Sms'=>$Sms,'result' => $Sms]);
     				break;
     		}
 

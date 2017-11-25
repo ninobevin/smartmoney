@@ -45,7 +45,7 @@
 					
 					<p class="text-warning">
 						Please fill in the necessary data, any input will be verified based on the
-						actual sms. 
+						actual sms. <span class="label label-success">Green</span> labels are required.
 					</p>
 
 					<div class="box-title">
@@ -63,11 +63,12 @@
 						<form method="post" name='formForceFilter' action="{{ url('/search/forceFilterStore/{'.encrypt($sms->id).'}') }}" id='formForceFilter'>
 
 						<input type="hidden" name="sms" value="{{ $sms->body }}">
+						<input type="hidden" name="date" value="{{ $sms->date }}">
 						
 						<div class="col-md-3">
 							
 							<fieldset class="form-group">
-								<span class="label label-default">
+								<span class="label label-success">
 									Amount
 								</span>
 								<input type="text" name="amount" class="form-control" >
@@ -75,13 +76,46 @@
 
 
 						</div>
+						<div class="col-md-3">
+							
+							<fieldset class="form-group">
+								<span class="label label-default">
+									Commission
+								</span>
+								<input type="text" name="com" class="form-control" >
+							</fieldset>	
+
+
+						</div>
+						<div class="col-md-3">
+							
+							<fieldset class="form-group">
+								<span class="label label-default">
+									Mobile/Smartmoney
+								</span>
+								<input type="text" name="smartmoney" class="form-control" >
+							</fieldset>	
+
+
+						</div>
+							<div class="col-md-3">
+							
+							<fieldset class="form-group">
+								<span class="label label-success">
+									Reference
+								</span>
+								<input type="text" class="form-control" name="ref_no">
+							</fieldset>	
+
+
+							</div>
 							<div class="col-md-3">
 							
 							<fieldset class="form-group">
 								<span class="label label-default">
-									Reference
+									Balance
 								</span>
-								<input type="text" class="form-control" name="ref_no">
+								<input type="text" class="form-control" name="balance">
 							</fieldset>	
 
 
@@ -93,7 +127,7 @@
 								
 							
 
-							<span class="label label-default">Type</span>
+							<span class="label label-success">Type</span>
 							<select  name="direction" class="form-control">
 								<option disabled selected >--Choose Type--</option>
 								
@@ -113,7 +147,7 @@
 								
 							
 
-							<span class="label label-default">Account</span>
+							<span class="label label-success">Account</span>
 							<select  name="account" class="form-control">
 								<option disabled selected >--Choose Acct--</option>
 								
@@ -131,26 +165,7 @@
 
 
 							</div>
-							<div class="col-md-3">
-							
-
-							<fieldset class="form-group">
-								
-							
-
-							<span class="label label-default">Partnership</span>
-							<select  name="partnership" class="form-control">
-								<option disabled selected >-- No Selected --</option>
-								
-								<option value="1">Authorized</option>
-								<option value="0">Non Authorized</option>
-								
-							</select>
-
-							</fieldset>
-
-
-							</div>
+				
 
 							
 							{{ csrf_field() }}

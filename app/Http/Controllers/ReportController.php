@@ -14,6 +14,7 @@ class ReportController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('accessbranch');
     }
 
     public function sales_index(Request $request){
@@ -31,7 +32,7 @@ class ReportController extends Controller
 
 
     		$claims = Transaction::where('status','2')
-    		->whereDate('date_claimed',[Carbon::parse($request->date_from)->startOfDay(),Carbon::parse($request->date_to)->endOfDay()])
+    		->whereBetween('date_claimed',[Carbon::parse($request->date_from)->startOfDay(),Carbon::parse($request->date_to)->endOfDay()])
     	->get();
 
     		$sends = Transaction::where('status','3')

@@ -33,7 +33,7 @@ use \Carbon\Carbon;
 	<div class="btn-group pull-right">
 		
 		
-		<a href='{{  route("search.filtersms",["id"=>$sms->id]) }}' class="btn btn-primary">Filter </a>
+		<a href='{{  route("search.filtersms",["id"=>$sms->id]) }}' class="btn btn-primary">Add Filter </a>
 		<a href='{{  url("search/forcefilterIndex/{".encrypt($sms->id)."}") }}' class="btn btn-warning">Force Filter </a>
 
 

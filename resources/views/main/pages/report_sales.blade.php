@@ -60,25 +60,38 @@
 
 		
 				<div class="invoice">
-					<div class="row">
+					<div class="page-header">
+						<div class="row">
 					        <div class="col-xs-12">
-					          <h2 class="page-header">
-					            <i class="fa fa-globe"></i> AdminLTE, Inc.
+					          
+					           <span class="text-primary">Company name</span>
 
 					            
 
+					           		 <small class="pull-right col-sm-3">
+					                   	<span class="text-primary">From </span>
+					                   	{{ @$_REQUEST['date_from']?\Carbon\Carbon::parse($_REQUEST['date_from'])->format('F d Y'):\Carbon\Carbon::now()->format('F d Y') }}
+					                   </small>
 					            
-					            <small class="pull-right">
+					            
+					           
+					          </div>
+
+					    </div>
+					    <div class="row">
+					    	<div class="col-xs-12">
+					    		
+					    			<span class="text-muted">Address here.....</span>
+					    	
+					            <small class="pull-right col-sm-3" >
 					            	<span class="text-primary">To </span>
-					            	{{ @$_REQUEST['date_to']?\Carbon\Carbon::parse($_REQUEST['date_to'])->format('F d Y'):\Carbon\Carbon::now()->format('F d Y') }}</small>
-					            <small class="pull-right" style="margin-right: 20px;">
-					            	<span class="text-primary">From </span>
-					            	{{ @$_REQUEST['date_from']?\Carbon\Carbon::parse($_REQUEST['date_from'])->format('F d Y'):\Carbon\Carbon::now()->format('F d Y') }}</small>
-
-					          </h2>
-					        </div>
+					            	{{ @$_REQUEST['date_to']?\Carbon\Carbon::parse($_REQUEST['date_to'])->format('F d Y'):\Carbon\Carbon::now()->format('F d Y') }}
+					            </small>
+					    	</div>
+					    </div>
 					        <!-- /.col -->
 					</div>
+				
 
 
 
@@ -167,7 +180,7 @@
 				     				<td>{{ $loop->iteration }}</td>
 				     				<td class="text-left">{{ $transaction->date }}</td>
 				     				<td class="text-left">{{ $transaction->ref_no }}</td>
-				     				<td class="text-right">{{ number_format($transaction->amount,2) }}</td>
+				     				<td class="text-right">{{ number_format($transaction->com,2) }}</td>
 				     				<td class="text-right">{{ number_format($transaction->amount,2) }}</td>
 				     				<td class="text-center">
 				     					{{ @$transaction->customer?$transaction->customer->getFullName():'None' }}</td>
@@ -178,7 +191,7 @@
 				                
 				                <tr>
 				                	<td colspan="3"></td>
-				                	<td class="text-right"><strong>{{ number_format($sends->sum('amount'),2) }}</strong></td>
+				                	<td class="text-right"><strong>{{ number_format($sends->sum('com'),2) }}</strong></td>
 				                	<td class="text-right"><strong>{{ number_format($sends->sum('amount'),2) }}</strong></td>
 				                	<td class="text-center"></td>
 				                </tr>
@@ -216,32 +229,9 @@
 
 @section('scripts')
 
-<script type="text/javascript" src="{{ asset('plugins/iCheck/icheck.min.js')}}">
-	
-</script>
-
-<script type="text/javascript">
-	
-
-	//iCheck for checkbox and radio inputs
-	$('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
-	  checkboxClass: 'icheckbox_minimal-blue',
-	  radioClass   : 'iradio_minimal-blue'
-	})
-	//Red color scheme for iCheck
-	$('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
-	  checkboxClass: 'icheckbox_minimal-red',
-	  radioClass   : 'iradio_minimal-red'
-	})
-	//Flat red color scheme for iCheck
-	$('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
-	  checkboxClass: 'icheckbox_flat-green',
-	  radioClass   : 'iradio_flat-green'
-	})
 
 
 
-</script>
 @endsection
 
 

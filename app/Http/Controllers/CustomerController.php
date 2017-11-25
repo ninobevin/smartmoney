@@ -6,16 +6,23 @@ use Illuminate\Http\Request;
 
 use App\Customer;
 
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Input;
+
 class CustomerController extends Controller
 {
     //
         public function __construct()
         {
             $this->middleware('auth');
+            $this->middleware('accessbranch');
         }
         
         public function saveQuickAddCustomer(Request $request)
         {
+        
+
+    
         
         
         $c = new Customer();
@@ -49,6 +56,10 @@ class CustomerController extends Controller
         $result = $c->save();
         
         if ($result) {
+
+            Storage::put('customer/'.$c->cust_id.'.png',base64_decode($request->imgtags));
+
+
             return "<p class='text-success'><i class='fa fa-check'></i> Customer successfully saved.<p>";
         } else {
             return "<p class='text-danger'><i class='fa fa-exclamation-triangle'></i> Customer not saved.<p>";

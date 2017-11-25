@@ -50,8 +50,8 @@
 </div>
 		
 		<div class="invoice">
-			<div class="row">
-				<div class="col-xs-12">
+		
+				{{-- <div class="col-xs-12">
 					<h2 class="page-header">
 					<i class="fa fa-globe"></i> AdminLTE, Inc. 
 					
@@ -70,8 +70,47 @@
 					
 					</h2>
 				</div>
-				<!-- /.col -->
-			</div>
+				<!-- /.col --> --}}
+				<div class="page-header">
+						<div class="row">
+					        <div class="col-xs-12">
+					          
+					           <span class="text-primary">Company name</span>
+
+					            
+
+					           		 <small class="pull-right col-sm-3">
+					                   	<span class="text-primary">From </span>
+					                   	{{ @$_REQUEST['date_from']?\Carbon\Carbon::parse($_REQUEST['date_from'])->format('F d Y'):\Carbon\Carbon::now()->format('F d Y') }}
+					                   </small>
+					            
+					            
+					           
+					          </div>
+
+					    </div>
+					    <div class="row">
+					    	<div class="col-xs-12">
+					    		
+					    			<span class="text-muted">Address here.....</span>
+					    	
+					            <small class="pull-right col-sm-3" >
+					            	<span class="text-primary">To </span>
+					            	{{ @$_REQUEST['date_to']?\Carbon\Carbon::parse($_REQUEST['date_to'])->format('F d Y'):\Carbon\Carbon::now()->format('F d Y') }}
+					            </small>
+					    	</div>
+					    </div>
+					        <!-- /.col -->
+					</div>
+		
+
+
+
+
+
+
+
+
 			
 
 		

@@ -10,7 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+ //URL::forceSchema('https');
 
 
 Route::get('/', function () {
@@ -18,9 +18,51 @@ Route::get('/', function () {
 });
 
 
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/error/branch',function(){
+   return view('errors.accesserrorbranch');
+})->name('accessbranch');
+
+Route::get('/error/accesstime',function(){
+   return view('errors.accesstimeout');
+})->name('accesstimeout');
+
+Route::get('/authenticate/branch',function(\Illuminate\Http\Request $request){
+   
+         
+            
+
+         if(isset($request->accesskey)){
+
+
+
+
+            $branch = App\Branch::where('key',$request->accesskey)->first();
+
+            if(count($branch) > 0)
+            {
+
+
+                 return redirect('/')
+                 ->withCookie('keybranch',$request->accesskey,2628000)
+                 ->withCookie('branchname',$branch->branch_name,2628000)
+                 ->withCookie('appkey',$branch->branch_no,2628000);
+            }else{
+
+                 return redirect()->back();
+            }
+
+         }
+
+
+        return redirect('/');
+
+})->name('authbranch');
+
 
 
 Route::get('/error',function(){
@@ -55,7 +97,7 @@ Route::prefix('Report')->group(function () {
     Route::get('account', 'ReportController@account')->name('report.account');
 });
 Route::prefix('customer')->group(function () {
-    Route::get('saveQuickAddCustomer', 'CustomerController@saveQuickAddCustomer')->name('saveQuickAddCustomer');
+    Route::post('saveQuickAddCustomer', 'CustomerController@saveQuickAddCustomer')->name('saveQuickAddCustomer');
     Route::get('edit', 'CustomerController@edit')->name('customeredit');
     Route::post('edit', 'CustomerController@saveEdit')->name('customer.saveEdit');
     Route::post('quicksearch', 'CustomerController@search')->name('customer.quicksearch');

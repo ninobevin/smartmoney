@@ -3,6 +3,9 @@
  
     use \Carbon\Carbon;
 
+
+
+
 ?>
 
 
@@ -10,7 +13,23 @@
           <!-- Profile Image -->
           <div class="box box-primary">
             <div class="box-body box-profile">
-              <img class="profile-user-img img-responsive img-circle" src='{{ asset("dist/img/user4-128x128.jpg")}}' alt="User profile picture">
+              <img class="profile-user-img img-responsive zoom" 
+
+                @if(!Storage::has('public/customer/'.$customer->cust_id.'.jpeg'))
+
+                src="{{ asset('dist/img/user.jpeg') }}"
+
+                @else
+
+             
+                src="{!! asset('storage/customer/' .$customer->cust_id.'.jpeg') !!}"
+
+                
+
+                @endif
+
+                alt="User profile picture">
+
 
               <h3 class="profile-username text-center">{{ $customer->getFullName() }}</h3>
 

@@ -1,3 +1,20 @@
+	
+<style type="text/css">
+		
+	.picbackground{
+		
+	}
+
+	.picSize
+	{
+		
+	}
+
+	#imgtag {
+	    
+	}
+	
+</style>
 	  <div class="modal fade modal-default" id="quickAddCustomer" role="dialog">
 	  	<div class="modal-dialog">
 
@@ -35,44 +52,80 @@
 
 	  			</div>
 	  			<div class="row">
-	  				<div class="col-sm-6">
-	  					
-	  					<input type="file"  id="fileselect" name="fileselect"  accept="image/*" capture="camera" >
-
-	  					<input type="file" name="picpic" />
-	  					
-	  		
-	  						<button type="button" id="save" class="btn btn-primary"><i class="fa fa-camera"></i>  Save</button>
-
-
 	  				
 
-	  					
-	  						<button type="button" onclick="useCam()" id="usecam" class="btn btn-primary">
-	  							<i class="fa fa-power-off"></i> Turn on/off Camera
-	  						</button>
+	  				<div class="col-sm-4">
 	  				
-	  					
-	  					 
+	  				
 
-	  					
-	  				</div>
-	  				<div class="col-sm-6" style="background-color: gray;">
-	  				
-	  						
-	  						    <video style="display: none" width="100%" height="100%" autoplay id="videoElement">	  				     
+
+
+
+
+	  						<video  style="display: none" width="500" height="500" class="img-responsive" autoplay id="videoElement">	  				     
 	  						    </video>
 
-	  						<canvas width="100%" height="100%" id="canvas" style="display: none"></canvas>
-	  						<img width="100%" name="imgtag" height="100%" id="imgtag"
-	  						 src="" alt=""></img>
+	  						<canvas class="img-responsive" width="500" height="500" id="canvas" style="display: none"></canvas>
+	  						<div id="pic_container">
 
-	  						<input type="hidden"  name="imgpic"  id="imgpic">	 
+	  							<img  name="imgtag" src="{{ asset('dist/img/default-50x50.gif') }}" class="img-responsive" width="500" height="500" id="imgtag"
+	  							 src="" alt=""></img>
+
+	  							
+	  						</div>
+	  						
+	  						<input type="hidden"  name="imgpic"  id="imgpic">	
+
+
+	  					
+
+	  						 
 
 
 
 	  					    
 	  				</div>
+
+
+	  				<div class="col-sm-6">
+	  					
+	  					<div class="form-group">
+	  						
+
+	  						<input type="file"  id="fileselect" name="fileselect"  accept="image/*" capture="camera" >
+
+	  					</div>
+	  					<div class="form-group">
+	  						
+	  						<button type="button" onclick="useCam()" id="usecam" class="btn btn-primary">
+	  							<i class="fa fa-power-off"></i> Turn on/off Camera
+	  						</button>
+
+	  						
+	  						
+	  						
+	  						
+	  					</div>
+
+						<div class="form-group">
+							  		
+							<button type="button" id="save" class="btn btn-primary"><i class="fa fa-camera"></i>  Save</button>
+
+
+						</div>	  					
+	  					
+
+
+	  				
+
+	  					
+	  						
+
+	  					
+	  				</div>
+
+
+	  			
 	  		
 	  				
 	  				
@@ -102,7 +155,7 @@
 
 	  	// check for getUserMedia support
 	  	navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia;
-	  	 
+
 	  	
 	  	function useCam(){
 
@@ -125,6 +178,7 @@
 	  	function handleVideo(stream) {
 	  	    // if found attach feed to video element
 	  	    video.src = window.URL.createObjectURL(stream);
+
 	  	}
 	  	 
 	  	function videoError(e) {
@@ -139,8 +193,11 @@
 	  	    v = document.getElementById('videoElement');
 	  	    canvas = document.getElementById('canvas');
 	  	    context = canvas.getContext('2d');
-	  	    w = canvas.width;
+	  	    w =   canvas.width;
 	  	    h = canvas.height;
+	  	     // alert("Trigerred");
+
+
 
 	  	},false);
 
@@ -150,8 +207,9 @@
 
 	  	    context.drawImage(v,0,0,w,h); // draw video feed to canvas
 	  	   
-	  	   var uri = canvas.toDataURL("image/png"); // convert canvas to data URI
+	  	   var uri = canvas.toDataURL("image/jpeg"); // convert canvas to data URI
 	  	   
+	  	 
 
 
 	  	   //console.log(uri); // uncomment line to log URI for testing
@@ -212,7 +270,6 @@
 	  	    for (var i = 0; i < byteString.length; i++) {
 	  	        ia[i] = byteString.charCodeAt(i);
 	  	    }
-
 	  	    // write the ArrayBuffer to a blob, and you're done
 	  	    var bb = new Blob([ab], { type: type });
 	  	    return bb;
@@ -224,64 +281,7 @@
 	<script type="text/javascript">
 			$('#saveCustomer').click(function(){
 
-				/*
-
-			var data = $('#formAddCustomer').serialize();
-
-			var data_ex = $('#formAddCustomer').serializeArray();
-
-
-			var fd = new FormData();
-
-			//var toAppend =  document.getElementById("imgtag").src.split(",")[1];
-
-			var toAppend = document.getElementById("fileselect").value;
-
-
-			//data += "&pic_prof="+toAppend;
-
-			$.each(data_ex,function(key,input){
-			       fd.append(input.name,input.value);
-			     //  fd.append("hehe","kkoool");
-
-			    // console.log(input.name);
-			 });
-
-			 fd.append("fileselect",toAppend);
-
-			// console.log(">>>>>>" + toAppend);
-
-
-	
-
-		    $.ajax({
-			  url: "",
-			  method: "POST",
-			  data: fd
-			   
-			}).done(function(data){
-				$("#quickadd_response_save").html(data);
-			}).fail(function(){
-				//console.log("failed");
-			});
-
 			
-			$('[data-dismiss=modal]').on('click', function (e) {
-			    var $t = $(this),
-			        target = $t[0].href || $t.data("target") || $t.parents('.modal') || [];
-
-			  $(target)
-			    .find("input,textarea,select")
-			       .val('')
-			       .end()
-			    .find("input[type=checkbox], input[type=radio]")
-			       .prop("checked", "")
-			       .end();
-			});
-
-
-		});
-		*/
 
 		var form =	$('#formtosubmit').val();
 
@@ -291,6 +291,11 @@
 		var middleinitial  = $("input[name=middleinitial]").val();
 		var lastname  = $("input[name=lastname]").val();
 		var fileselect  = $("input[name=fileselect]").val();
+
+		 
+		var pics = document.getElementById("imgtag").src;
+
+		
 
 		var imgtags =  document.getElementById("imgtag").src.split(",")[1];
 
@@ -305,9 +310,6 @@
 				console.log(data);
 				
 		});
-
-	
-
 	});	
 
 	</script>

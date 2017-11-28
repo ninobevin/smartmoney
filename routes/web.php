@@ -27,25 +27,37 @@ Route::get('/error/branch',function(){
    return view('errors.accesserrorbranch');
 })->name('accessbranch');
 
+Route::get('storage', function (\Illuminate\Http\Request $request)
+{
+    $path = storage_path('customer/' . $request->filename);
+
+    if (!File::exists($path)) {
+        abort(404);
+    }
+
+    $file = File::get($path);
+    $type = File::mimeType($path);
+
+    $response = Response::make($file, 200);
+    $response->header("Content-Type", $type);
+
+    return $response;
+})->name('storage');
+
+
 Route::get('/error/accesstime',function(){
    return view('errors.accesstimeout');
 })->name('accesstimeout');
 
 Route::get('/authenticate/branch',function(\Illuminate\Http\Request $request){
    
-         
-            
-
          if(isset($request->accesskey)){
-
-
 
 
             $branch = App\Branch::where('key',$request->accesskey)->first();
 
             if(count($branch) > 0)
             {
-
 
                  return redirect('/')
                  ->withCookie('keybranch',$request->accesskey,2628000)

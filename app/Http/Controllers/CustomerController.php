@@ -57,8 +57,11 @@ class CustomerController extends Controller
         
         if ($result) {
 
-            Storage::put('customer/'.$c->cust_id.'.png',base64_decode($request->imgtags));
 
+            if(!empty(trim($request->imgtags)))
+            {
+                Storage::put('public/customer/'.$c->cust_id.'.jpeg',base64_decode($request->imgtags));
+            }
 
             return "<p class='text-success'><i class='fa fa-check'></i> Customer successfully saved.<p>";
         } else {
@@ -75,6 +78,13 @@ class CustomerController extends Controller
     }
     public function saveEdit(Request $request)
     {
+
+
+
+         $pic_source = explode(",",$request->imgpic)[1];
+
+          
+
         $customer = Customer::find($request->id);
 
         $cCount = Customer::where('fname', $request->firstname)
@@ -100,6 +110,13 @@ class CustomerController extends Controller
 
         $customer->save();
 
+        if(!empty(trim($pic_source)))
+        {
+           Storage::put('public/customer/'.$customer->cust_id.'.jpeg',base64_decode($pic_source));
+        }
+
+
+      
         
         return view('main.pages.editcustomer',['customer' => $customer,'message' => 'Update success.']);
     }

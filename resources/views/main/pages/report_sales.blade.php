@@ -64,7 +64,7 @@
 						<div class="row">
 					        <div class="col-xs-12">
 					          
-					           <span class="text-primary">Company name</span>
+					           <span class="text-primary">Upgrade Central</span>
 
 					            
 
@@ -81,7 +81,7 @@
 					    <div class="row">
 					    	<div class="col-xs-12">
 					    		
-					    			<span class="text-muted">Address here.....</span>
+					    			<span class="text-muted">Sales Report</span>
 					    	
 					            <small class="pull-right col-sm-3" >
 					            	<span class="text-primary">To </span>
@@ -169,6 +169,7 @@
 				                  <th class="text-center">Com</th>
 				                  <th class="text-center">Amount</th>
 				                  <th class="text-center">Customer</th>
+				                  <th class="text-center no-print">Verification</th>
 				                </tr>
 				                </thead>
 				                <tbody>
@@ -184,6 +185,9 @@
 				     				<td class="text-right">{{ number_format($transaction->amount,2) }}</td>
 				     				<td class="text-center">
 				     					{{ @$transaction->customer?$transaction->customer->getFullName():'None' }}</td>
+				     				<td class="text-center">
+				     					<button class="btn btn-primary">{{$transaction->cash_amount}}</button>
+				     				</td>
 				     			</tr>
 
 
@@ -193,6 +197,7 @@
 				                	<td colspan="3"></td>
 				                	<td class="text-right"><strong>{{ number_format($sends->sum('com'),2) }}</strong></td>
 				                	<td class="text-right"><strong>{{ number_format($sends->sum('amount'),2) }}</strong></td>
+				                	<td class="text-center"></td>
 				                	<td class="text-center"></td>
 				                </tr>
 

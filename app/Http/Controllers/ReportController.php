@@ -27,13 +27,10 @@ class ReportController extends Controller
     	if($request->has('date_from')){
 
 
-
-
-
-
     		$claims = Transaction::where('status','2')
     		->whereBetween('date_claimed',[Carbon::parse($request->date_from)->startOfDay(),Carbon::parse($request->date_to)->endOfDay()])
     	->get();
+
 
     		$sends = Transaction::where('status','3')
     	->whereBetween('date',[Carbon::parse($request->date_from)->startOfDay(),Carbon::parse($request->date_to)->endOfDay()])
@@ -71,44 +68,54 @@ class ReportController extends Controller
         }
 
         */
+            
+            $date_from = isset($request->date_from) ? 
+                            Carbon::parse($request->date_from)->startOfDay()
+                         : Carbon::today()->toDateString();
+            $date_to =   isset($request->date_to) ? 
+                            Carbon::parse($request->date_to)->endOfDay()
+                         : Carbon::today()->toDateString();
+
             $accounts = Account::all();
 
-            if($request->has('date_from')){
+   
 
 
                  
 
-                foreach ($accounts as $account) {
+            foreach ($accounts as $account) {
                         
 
-                    $transaction[] = Transaction::where('account',$account->account_no)
-                    ->whereBetween('date',[Carbon::parse($request->date_from)->startOfDay(),Carbon::parse($request->date_to)->endOfDay()])->orderBy('date','asc')
+                $transaction[] = Transaction::where('account',$account->account_no)
+                    ->whereBetween('date',[$date_from,$date_to])
+                    ->orderBy('date','asc')
                     ->get();    
 
-                }
+            }
 
-                    $unidentified = Transaction::whereBetween('date',[Carbon::parse($request->date_from)->startOfDay(),Carbon::parse($request->date_to)->endOfDay()])-> orderBy('date','asc')    
+                    $unidentified = Transaction::whereBetween('date',[$date_from,$date_to])-> orderBy('date','asc')    
                     ->whereNull('account')
                     ->get();  
 
 
                 
 
-                 return view('main.pages.account',['accounts'=>$transaction,'unidentified'=>$unidentified]);
+            return view('main.pages.account',['accounts'=>$transaction,'unidentified'=>$unidentified]);
 
-            }
+            
 
 
 
-            foreach ($accounts as $account) {
+
+            // foreach ($accounts as $account) {
                     
 
-                $transaction[] = Transaction::where('account',$account->account_no)->whereDate('date','=',Carbon::today()->toDateString())->orderBy('date')
-                ->get();    
+            //     $transaction[] = Transaction::where('account',$account->account_no)->whereDate('date','=',Carbon::today()->toDateString())->orderBy('date')
+            //     ->get();    
 
-            }
+            // }
 
-            return view('main.pages.account',['accounts'=>$transaction]);
+            // return view('main.pages.account',['accounts'=>$transaction]);
 
 
 

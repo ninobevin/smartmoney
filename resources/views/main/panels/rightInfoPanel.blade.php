@@ -34,7 +34,9 @@
 	<!-- /.box-header -->
 	<div class="box-body">
 		
-		<img class="img-responsive" src="http://www.lowervillagesurveyco.com/wp-content/uploads/2012/10/Surveying+crew+on+construction+site1.jpg">
+		{{-- <img class="img-responsive" src="http://www.lowervillagesurveyco.com/wp-content/uploads/2012/10/Surveying+crew+on+construction+site1.jpg"> --}}
+
+		<span class="text-muted">ADS SPACE</span>
 		
 	</div>
 	<!-- /.box-body -->

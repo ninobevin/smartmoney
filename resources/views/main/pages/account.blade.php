@@ -74,8 +74,8 @@
 				<div class="page-header">
 						<div class="row">
 					        <div class="col-xs-12">
-					          
-					           <span class="text-primary">Company name</span>
+
+					           <span class="text-primary">Upgrade Central</span>
 
 					            
 
@@ -92,7 +92,7 @@
 					    <div class="row">
 					    	<div class="col-xs-12">
 					    		
-					    			<span class="text-muted">Address here.....</span>
+					    			<span class="text-muted">Smartpadala Account Summary</span>
 					    	
 					            <small class="pull-right col-sm-3" >
 					            	<span class="text-primary">To </span>

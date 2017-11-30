@@ -117,4 +117,5 @@ Route::prefix('customer')->group(function () {
 Route::prefix('sms')->group(function () {
     
     Route::get('inbox', 'SmsController@viewInbox')->name('sms.inbox');
+    Route::get('details', 'SmsController@smsdetails')->name('sms.details');
 });

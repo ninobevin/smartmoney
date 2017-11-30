@@ -20,7 +20,7 @@ class SmsController extends Controller
      {
             $this->middleware('auth');
             $this->middleware('accessbranch');
-            $this->middleware('accessright');
+           // $this->middleware('accessright');
      }
 
 
@@ -36,7 +36,35 @@ class SmsController extends Controller
 
     public function viewInbox(Request $request){
 
-    	return view('main.pages.inbox');
+
+
+     //   $smsinbox = Sms::selectRaw("address as address,count(address) as count ")
+     ///   ->groupBy('address')->paginate(20);
+
+
+            if( isset($request->q) ){
+
+          //$smsinbox = Sms::groupBy('address')->paginate(20);
+               
+                 $smsinbox = Sms::selectRaw("address as address,count(id) as count ")
+                ->where('address','like',"%".$request->q."%")
+                ->groupBy('address')->paginate(20);
+
+         
+
+            }else{
+
+         //       $smsinbox = Sms::select('address')->distinct('address')->paginate(20);
+                 $smsinbox = Sms::selectRaw("address as address,count(address) as count ")
+                ->groupBy('address')->paginate(20);
+            }        
+
+
+
+        
+
+
+    	return view('main.pages.inbox',['smsinbox'=>$smsinbox]);
     }
     public function forcefilterIndex(Request $request){
 
@@ -170,5 +198,14 @@ class SmsController extends Controller
          }
 
         
+    }
+
+    public function smsdetails(Request $request)
+    {
+
+        $Sms = Sms::where("address",$request->sms_id)->orderBy('date','desc')->paginate(10);
+
+        return view("main.pages.smsdetails",['Sms'=>$Sms]);
+
     }
 }

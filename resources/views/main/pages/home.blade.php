@@ -26,29 +26,6 @@
 
 	@endif
 
-	
-
-			<ul>
-				<li>{{ $_SERVER['SERVER_ADDR'] }}</li>
-				<li>{{ $_SERVER['SERVER_PORT'] }}</li>
-				<li>{{ $_SERVER['REMOTE_ADDR'] }}</li>
-				<li><?php
-
-					$branch_details = new  App\library\Application;
-					
-					 dump($branch_details::COMPANY_NAME);
-				 ?></li>
-					
-			</ul>
-			
-			
-			
-
-		<h1>{{ Cookie::get('branchname') }}</h1>
-
-
-<img src="">
-		
 
 
 		

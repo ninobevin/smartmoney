@@ -24,15 +24,20 @@ class ReportController extends Controller
     	//return Carbon::today()->toDateString();
 
 
+        $claims = [];
+        $sends = [];
+
     	if($request->has('date_from')){
 
 
     		$claims = Transaction::where('status','2')
+            ->where('branch_no',$request->branch_no)
     		->whereBetween('date_claimed',[Carbon::parse($request->date_from)->startOfDay(),Carbon::parse($request->date_to)->endOfDay()])
     	->get();
 
 
     		$sends = Transaction::where('status','3')
+            //->where('branch_no',$request->branch_no)
     	->whereBetween('date',[Carbon::parse($request->date_from)->startOfDay(),Carbon::parse($request->date_to)->endOfDay()])
     	->get();
 
@@ -40,13 +45,13 @@ class ReportController extends Controller
 
     	}
 
-    	$claims = Transaction::where('status','2')
-    	->whereDate('date_claimed','=',Carbon::today()->toDateString())
-    	->get();
+    	// $claims = Transaction::where('status','2')
+    	// ->whereDate('date_claimed','=',Carbon::today()->toDateString())
+    	// ->get();
 
-    		$sends = Transaction::where('status','3')
-    	->whereDate('date','=',Carbon::today()->toDateString())
-    	->get();
+    	// 	$sends = Transaction::where('status','3')
+    	// ->whereDate('date','=',Carbon::today()->toDateString())
+    	// ->get();
 
     	return view('main.pages.report_sales',['claims'=>$claims,'sends'=>$sends]);
     }

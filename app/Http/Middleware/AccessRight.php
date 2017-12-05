@@ -19,7 +19,7 @@ class AccessRight
      */
     public function handle($request, Closure $next)
     {
-        if(Auth::check()){
+        if(Auth::check() && Auth::user()->status == 'Active'){
 
             if(Auth::user()->level <= 2){
 
@@ -33,7 +33,6 @@ class AccessRight
             }
 
         }
-        
     }
 }
 

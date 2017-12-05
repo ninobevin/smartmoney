@@ -15,10 +15,14 @@ class User extends Authenticatable
      * @var array
      */
 
+    public $status_option = ['Active','Deactivated','For Approval'];
 
+    public $level_option = ['2' => 'Admin','3' => 'Cashier'];
+
+    protected $dates = ['created_at', 'updated_at'];
 
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','username','level'
     ];
 
     /**

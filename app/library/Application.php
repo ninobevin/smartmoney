@@ -13,7 +13,7 @@ class Application
     
 	
 
-	 const COMPANY_NAME = 'Company Name'; 
+	 const COMPANY_NAME = 'UPGRADE CENTRAL'; 
 	 const COMPANY_CAT = 'Company Category';
 	 const COMPANY_ADDRESS = 'Company Address Here'; 
 

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Transaction;
 use Illuminate\Support\Facades\Auth;
+use App\library\Application;
+
 
 
 class TransactionController extends Controller
@@ -34,6 +36,17 @@ class TransactionController extends Controller
     public function claim(Request $request){
 
 
+          $bkey  =  new Application();
+          $branch = $bkey->getBranch();
+
+          if($branch->main == '1'){
+
+            $branch_no = $request->branch_no;
+
+          }else{
+             $branch_no = $branch->branch_no;
+          }
+
           $ref_no = $request->ref_no;
           $cust_id = $request->cust_id;
           $account = $request->account;
@@ -51,13 +64,22 @@ class TransactionController extends Controller
           $t->cash_amount = $cash_amount;
           $t->date_claimed = \Carbon\Carbon::now();
           $t->user_id = Auth::user()->id;
-          $t->branch_no = 4;
-          $t->save();
+          $t->branch_no = $branch_no;
+          
+          if($t->save()){
 
 
-          \Session::flash('success_msg','Transaction successful');
+            \Session::flash('success_msg','Transaction successful');
 
-          return redirect('/home');
+            return redirect('/home');
+
+          }else{
+
+           \Session::flash('error_msg','Error while executing... Transaction might already claimed by another branch.');
+
+           return redirect('/home'); 
+          }
+
 
     }
 }

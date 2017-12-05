@@ -5,7 +5,12 @@
 @endsection
 @section('content')
 
+<?php
+	
+	$appConfig = new App\library\Application;
+	$branch_details = $appConfig->getBranch();
 
+?>
 
 <div class="row">
 	<div class="col-md-12">
@@ -21,6 +26,32 @@
 					<div class="form-group">
 						<label for="date_to">To:</label>
 						<input type="date" name='date_to' value="{{ @$_REQUEST['date_to']?$_REQUEST['date_to']:\Carbon\Carbon::now()->format('Y-m-d') }}" class="form-control">
+					</div>
+					<div class="form-group">
+						
+
+
+						<select name='branch_no' class="form-control">
+						
+
+						@if($branch_details->main == '1')
+							@foreach(App\Branch::all() as $branch)
+
+
+								@if(@$_REQUEST['branch_no'] == $branch->branch_no)
+									<option selected value="{{ $branch->branch_no }}">{{ $branch->branch_name }}</option>
+								@else
+									<option value="{{ $branch->branch_no }}">{{ $branch->branch_name }}</option>
+								@endif
+
+							@endforeach
+						@else
+							<option value="{{ $branch_details->branch_no }}">{{ $branch_details->branch_name }}</option>
+						@endif		
+							
+
+
+						</select>
 					</div>
 					
 					<button type="submit" class="btn btn-warning btn-flat">Generate</button>
@@ -64,7 +95,12 @@
 						<div class="row">
 					        <div class="col-xs-12">
 					          
-					           <span class="text-primary">Upgrade Central</span>
+					           <span class="">
+					           	<b>{{ $appConfig::COMPANY_NAME }}</b>
+					           	<span class="text-muted">
+					           		<small><u>{{ @App\Branch::where('branch_no',$_REQUEST['branch_no'])->first()->branch_name
+					           	}} Branch</small></u></span>
+					           </span>
 
 					            
 
@@ -81,7 +117,7 @@
 					    <div class="row">
 					    	<div class="col-xs-12">
 					    		
-					    			<span class="text-muted">Sales Report</span>
+					    			<span class="text-muted"><small>Sales Report</small></span>
 					    	
 					            <small class="pull-right col-sm-3" >
 					            	<span class="text-primary">To </span>
@@ -113,6 +149,7 @@
 				             <th class="text-left">Reference</th>
 				             <th class="text-center">Com</th>
 				             <th class="text-center">Amount</th>
+				             <th class="text-center">Payout</th>
 				             <th class="text-center">Customer</th>
 				           </tr>
 				           </thead>
@@ -129,6 +166,7 @@
 								<td class="text-left">{{ $transaction->ref_no }}</td>
 								<td class="text-right">{{ number_format($transaction->com,2) }}</td>
 								<td class="text-right">{{ number_format($transaction->amount,2) }}</td>
+								<td class="text-right">{{ number_format($transaction->cash_amount,2) }}</td>
 								<td class="text-center">
 								{{ @$transaction->customer->getFullName() }}</td>
 							</tr>
@@ -140,6 +178,7 @@
 				           	<td colspan="5"></td>
 				           	<td class="text-right"><strong>{{ number_format($claims->sum('com'),2) }}</strong></td>
 				           	<td class="text-right"><strong>{{ number_format($claims->sum('amount'),2) }}</strong></td>
+				           <td class="text-right"><strong>{{ number_format($claims->sum('cash_amount'),2) }}</strong></td>
 				           	<td class="text-center"></td>
 				           </tr>
 

@@ -1,4 +1,12 @@
   <!-- Modal -->
+
+<?php
+  
+  $appConfig = new App\library\Application;
+  $branch_details = $appConfig->getBranch();
+
+?>
+
 <div class="modal fade modal-default" id="confirmClaim" role="dialog">
   <div class="modal-dialog">
     
@@ -21,24 +29,27 @@
                 <select  name="account" class="form-control" required="required">
                   <option value="" disabled selected >--Choose Acct--</option>
                   
-                  @foreach(App\Account::all() as $account)
-                      
-                      
+                  @if(!isset($Transaction->account))
+                    @foreach(App\Account::all() as $account)
+                            
+                        @if($account->account_no == $Transaction->account)
+                            <option selected value="{{ $account->account_no }}">
+                            {{ $account->name }}
+                            </option>
+                        @else
+                            <option  value="{{ $account->account_no }}">
+                            {{ $account->name }}
+                            </option>
+
+                        @endif
                         
-                     
-                      @if($account->account_no == $Transaction->account)
-                          <option selected value="{{ $account->account_no }}">
-                          {{ $account->name }}
-                          </option>
-                      @else
-                          <option  value="{{ $account->account_no }}">
-                          {{ $account->name }}
-                          </option>
 
-                      @endif
-                      
-
-                  @endforeach
+                    @endforeach
+                  @else
+                    <option selected value="{{ $Transaction->account }}">
+                    {{ $Transaction->getAccount->name }}
+                    </option>
+                  @endif
                 </select>
               </fieldset>
 
@@ -50,7 +61,26 @@
               <input type="number" class="form-control" value='{{ $Transaction->amount }}' name="cash_amount">
             
           </fieldset>
+          <fieldset class="form-group">
+            
+            
+            <label class="label label-primary">Branch</label>
+            <select  name="branch_no" class="form-control" required="required">
+              
+              
 
+              
+              @if($branch_details->main == '1')
+                @foreach(App\Branch::all() as $branch)
+
+                  <option value="{{ $branch->branch_no }}">{{ $branch->branch_name }}</option>
+
+                @endforeach
+              @else
+                <option value="{{ $branch_details->branch_no }}">{{ $branch_details->branch_name }}</option>
+              @endif    
+            </select>
+          </fieldset>
 
           
           

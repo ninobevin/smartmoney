@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use \Illuminate\Support\Facades\Cookie;
 use App\Branch;
+use Auth;
 
 class AccessBranch
 {
@@ -18,6 +19,12 @@ class AccessBranch
     public function handle($request, Closure $next)
     {
 
+
+        if(Auth::check() && Auth::user()->status != 'Active'){
+
+            return redirect('/');
+
+        }
 
         
         if($request->cookie('keybranch')){

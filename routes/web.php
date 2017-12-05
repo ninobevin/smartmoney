@@ -119,3 +119,12 @@ Route::prefix('sms')->group(function () {
     Route::get('inbox', 'SmsController@viewInbox')->name('sms.inbox');
     Route::get('details', 'SmsController@smsdetails')->name('sms.details');
 });
+
+Route::prefix('admin')->group(function(){
+
+
+    Route::get('users','AdminController@users')->name('admin.users');
+    //Route::get('users','AdminController@users')->name('admin.users');
+
+
+});

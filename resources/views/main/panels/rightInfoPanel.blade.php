@@ -3,6 +3,17 @@
 		<h3 class="box-title">Quick Information</h3>
 	</div>
 	<!-- /.box-header -->
+
+	<?php
+	  
+	  $appConfig = new App\library\Application;
+	  $branch_details = $appConfig->getBranch();
+
+
+	  $network_charge = new App\NetworkCharge();
+	  $agent_charge = new App\AgentCharge();
+
+	?>
 	<div class="box-body">
 		
 		<h5><span class="label label-success">Pending Amount (Unclaimed)</span></h5>
@@ -13,12 +24,14 @@
 		<h5><span class="label label-danger">Claimed</span></h5>
 		<p class="text-muted">
 			{{  App\Transaction::where(['status'=>'2'])
+			->where('branch_no',$branch_details->branch_no)
 			->whereDate('date_claimed',DB::raw('curdate()'))
 			->sum('amount')  }} 
 		</p>
 		<h5><span class="label label-primary">Sent</span></h5>
 		<p class="text-muted">
 			{{  App\Transaction::where(['status'=>'3'])
+			->where('branch_no',$branch_details->branch_no)
 			->whereDate('date',DB::raw('curdate()'))
 			->sum('amount')  }} 
 		</p>

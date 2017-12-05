@@ -82,4 +82,42 @@ class TransactionController extends Controller
 
 
     }
+
+    public function verifysend(Request $request){
+
+
+      if($request->has('btn_verify')){
+
+        $save = Transaction::where('direction','=','0')
+                                    ->where('tran_id',$request->tran_id)->first();
+        $save->cash_amount = $request->cash_amount;
+        $save->branch_no = $request->branch_no;
+        $save->account = $request->account;
+
+        if($save->save()){
+
+
+          \Session::flash('success_msg','Transaction successful');
+          return redirect(route('report.sales'));  
+
+        }else{
+
+          \Session::flash('error_msg','Transaction Error');
+          return redirect(route('report.sales'));  
+
+
+        }
+
+
+      }
+
+         
+
+
+       $transaction =  Transaction::where('direction','=','0')
+                            ->where('tran_id',$request->tran_id)->get()->first();
+      
+          return view('main.pages.verifysend',['transaction'=> $transaction]);
+
+    }
 }

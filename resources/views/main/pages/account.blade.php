@@ -5,6 +5,16 @@
 @endsection
 @section('content')
 
+<?php
+	
+	$appConfig = new App\library\Application;
+	$branch_details = $appConfig->getBranch();
+
+
+	$network_charge = new App\NetworkCharge();
+	$agent_charge = new App\AgentCharge();
+
+?>
 
 <div class="row">
 	<div class="col-md-12">
@@ -75,30 +85,44 @@
 						<div class="row">
 					        <div class="col-xs-12">
 
-					           <span class="text-primary">Upgrade Central</span>
+					           	<div class="row">
+					                   <div class="col-xs-12">
+					                     
+					                      <span class="">
+					                      	<b>{{ $appConfig::COMPANY_NAME }}</b>
+					                      	<span class="text-muted">
+					                      		<small><u>{{ @App\Branch::where('branch_no',$_REQUEST['branch_no'])->first()->branch_name
+					                      	}} Branch</small></u></span>
+					                      </span>
 
-					            
+					                       
 
-					           		 <small class="pull-right col-sm-3">
-					                   	<span class="text-primary">From </span>
-					                   	{{ @$_REQUEST['date_from']?\Carbon\Carbon::parse($_REQUEST['date_from'])->format('F d Y'):\Carbon\Carbon::now()->format('F d Y') }}
-					                   </small>
-					            
+					                      		 <small class="pull-right col-sm-3">
+					                              	<span class="text-primary">From </span>
+					                              	{{ @$_REQUEST['date_from']?\Carbon\Carbon::parse($_REQUEST['date_from'])->format('F d Y'):\Carbon\Carbon::now()->format('F d Y') }}
+					                              </small>
+					                       
+					                       
+					                      
+					                     </div>
+
+					               </div>
 					            
 					           
 					          </div>
 
 					    </div>
 					    <div class="row">
-					    	<div class="col-xs-12">
+
+					    		<div class="col-xs-12">
+					    			
+					    				<span class="text-muted"><small>Smartpadala Account Summary</small></span>
 					    		
-					    			<span class="text-muted">Smartpadala Account Summary</span>
-					    	
-					            <small class="pull-right col-sm-3" >
-					            	<span class="text-primary">To </span>
-					            	{{ @$_REQUEST['date_to']?\Carbon\Carbon::parse($_REQUEST['date_to'])->format('F d Y'):\Carbon\Carbon::now()->format('F d Y') }}
-					            </small>
-					    	</div>
+					    	        <small class="pull-right col-sm-3" >
+					    	        	<span class="text-primary">To </span>
+					    	        	{{ @$_REQUEST['date_to']?\Carbon\Carbon::parse($_REQUEST['date_to'])->format('F d Y'):\Carbon\Carbon::now()->format('F d Y') }}
+					    	        </small>
+					    		</div>
 					    </div>
 					        <!-- /.col -->
 					</div>

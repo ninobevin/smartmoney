@@ -52,6 +52,24 @@ class Transaction extends Model
     
 
     }
+    public function updateCash(){
+
+        $appConfig = new library\Application;
+
+        $this->branch_no = $appConfig->getBranch()->branch_no;
+        $this->cash_amount = $appConfig->getSentCash($this->amount);
+
+
+    }
+    public function getCash(){
+
+        $appConfig = new library\Application;
+
+        
+        return $appConfig->getSentCash($this->amount);
+
+
+    }
 
 
     public static function getColumnNames(){

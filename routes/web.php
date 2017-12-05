@@ -98,6 +98,7 @@ Route::prefix('search')->group(function () {
 Route::prefix('transaction')->group(function () {
     Route::post('claimform', 'TransactionController@claimform')->name('transaction.claimform');
     Route::post('claim', 'TransactionController@claim')->name('transaction.claim');
+    Route::get('verifysend', 'TransactionController@verifysend')->name('transaction.verifysend');
 });
 Route::prefix('filter')->group(function () {
     Route::get('smsfilter', 'FilterController@smsfilter')->name('filter.smsfilter');

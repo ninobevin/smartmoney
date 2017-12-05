@@ -87,6 +87,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
     }
   </style>
 </style>
+
+<?php
+  
+  $appConfig = new App\library\Application;
+  $branch_details = $appConfig->getBranch();
+
+
+  $network_charge = new App\NetworkCharge();
+  $agent_charge = new App\AgentCharge();
+
+?>
 <body class="hold-transition skin-blue sidebar-mini">
   <div class="wrapper">
     <!-- Main Header -->
@@ -100,14 +111,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini"><i class="fa fa-globe"></i></span>
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><i class="fa fa-globe"></i> <small>{{ config('app.name') }}</small>
+        <span class="logo-lg">
+
+          <i class="fa fa-database"></i>
+          <small>{{ config('app.name') }}</small>
         </a>
         <!-- Header Navbar -->
         <nav class="navbar navbar-static-top" role="navigation">
           <!-- Sidebar toggle button-->
+
           <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
             <span class="sr-only">Toggle navigation</span>
           </a>
+
+          <div class="navbar-header">
+              <span class="navbar-brand">{{ $appConfig::COMPANY_NAME }} ({{ $branch_details->branch_name }} Branch )</span>
+          </div>
+
           <!-- Navbar Right Menu -->
           <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
@@ -125,6 +145,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
           $totalcount = 0;
           ?>
+
           <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
               <li class="dropdown notifications-menu">

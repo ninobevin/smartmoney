@@ -25,25 +25,72 @@ class ReportController extends Controller
 
 
         $claims = [];
-        $sends = [];
+        $sends =  [];
+        ///verify button
 
-    	if($request->has('date_from')){
+        if($request->has('generate') ||
+            $request->has('btn_verify')){
+
+            $claims = Transaction::where('status','2');
+            $sends =  Transaction::where('status','3');
+
+        }
 
 
-    		$claims = Transaction::where('status','2')
-            ->where('branch_no',$request->branch_no)
-    		->whereBetween('date_claimed',[Carbon::parse($request->date_from)->startOfDay(),Carbon::parse($request->date_to)->endOfDay()])
-    	->get();
+
+        if($request->has('date_from')){
+            $claims = $claims->whereBetween('date_claimed',[Carbon::parse($request->date_from)->startOfDay(),Carbon::parse($request->date_to)->endOfDay()]);
+             $sends = $sends->whereBetween('date',[Carbon::parse($request->date_from)->startOfDay(),Carbon::parse($request->date_to)->endOfDay()]);
+        }
+        if($request->has('branch_no')){
+
+            if($request->branch_no == 'none'){    
+
+                $claims = $claims->whereNull('branch_no');
+                $sends = $sends->whereNull('branch_no');
+        
+                
+            }else{            
+                $claims = $claims->where('branch_no',$request->branch_no);
+                $sends = $sends->where('branch_no',$request->branch_no);
+            }
+        }
 
 
-    		$sends = Transaction::where('status','3')
-            //->where('branch_no',$request->branch_no)
-    	->whereBetween('date',[Carbon::parse($request->date_from)->startOfDay(),Carbon::parse($request->date_to)->endOfDay()])
-    	->get();
 
-    	return view('main.pages.report_sales',['claims'=>$claims,'sends'=>$sends]);
+        if($request->has('btn_verify')){
 
-    	}
+                
+               
+
+        
+             $sent_loop = Transaction::where('status','3')
+                //->where('branch_no',$request->branch_no)
+            ->whereNull('cash_amount')    
+            ->whereBetween('date',[Carbon::parse($request->date_from)->startOfDay(),Carbon::parse($request->date_to)->endOfDay()]);
+
+
+           // return dump($sent_loop->get());
+            foreach($sent_loop->get() as $tran){
+
+                //return $tran;
+
+                $tran->updateCash();
+                $tran->save();
+
+            }   
+
+           // return view('main.pages.report_sales',['claims'=>$claims,'sends'=>$sends]);
+
+        }
+
+        ////
+
+ 
+    	//return view('main.pages.report_sales',['claims'=>$claims,'sends'=>$sends]);
+
+    
+      
 
     	// $claims = Transaction::where('status','2')
     	// ->whereDate('date_claimed','=',Carbon::today()->toDateString())
@@ -53,26 +100,23 @@ class ReportController extends Controller
     	// ->whereDate('date','=',Carbon::today()->toDateString())
     	// ->get();
 
-    	return view('main.pages.report_sales',['claims'=>$claims,'sends'=>$sends]);
+        if(count($claims) <=0){
+            $claims = [];
+        }else{
+            $claims = $claims->get();
+        }
+        if(count($sends) <=0){
+            $sends = [];
+        }else{
+            $sends = $sends->get();
+        }
+
+    	return view('main.pages.report_sales',['claims'=> $claims ,'sends'=>$sends]);
     }
 
     public function account(Request $request){
 
 
-        /*
-        if($request->has('date_from')){
-
-
-            $transaction = Transaction::whereBetween('date',[Carbon::parse($request->date_from)->startOfDay(),Carbon::parse($request->date_to)->endOfDay()])
-        ->get();
-
-        
-
-        return view('main.pages.account',['transaction'=>$transaction]);
-
-        }
-
-        */
             
             $date_from = isset($request->date_from) ? 
                             Carbon::parse($request->date_from)->startOfDay()
@@ -108,22 +152,6 @@ class ReportController extends Controller
             return view('main.pages.account',['accounts'=>$transaction,'unidentified'=>$unidentified]);
 
             
-
-
-
-
-            // foreach ($accounts as $account) {
-                    
-
-            //     $transaction[] = Transaction::where('account',$account->account_no)->whereDate('date','=',Carbon::today()->toDateString())->orderBy('date')
-            //     ->get();    
-
-            // }
-
-            // return view('main.pages.account',['accounts'=>$transaction]);
-
-
-
 
     }
 }

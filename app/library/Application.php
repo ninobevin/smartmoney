@@ -4,6 +4,9 @@ namespace App\library;
 
 use \Illuminate\Support\Facades\Cookie;
 use App\Branch;
+use App\NetworkCharge;
+use App\AgentCharge;
+
 
 
 
@@ -31,6 +34,15 @@ class Application
 
     	return $branch;
 
+
+    }
+
+    public function getSentCash($amount){
+
+    	return $amount
+    	+ (AgentCharge::where('amount','>=',$amount)->first()['charge'] * 2)
+    	+ (NetworkCharge::where('amount','>=',$amount)->first()['charge'] * 2);
+    					     										     				
 
     }
 }

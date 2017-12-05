@@ -10,10 +10,31 @@
 	$appConfig = new App\library\Application;
 	$branch_details = $appConfig->getBranch();
 
+
+	$network_charge = new App\NetworkCharge();
+	$agent_charge = new App\AgentCharge();
+
 ?>
 
 <div class="row">
 	<div class="col-md-12">
+
+	@if(Session::has('success_msg'))
+
+	  <div class="alert alert-success">
+
+	    <i class="fa fa-check"></i> {{ Session::get('success_msg') }}
+	  </div>
+
+	@endif
+	@if(Session::has('error_msg'))
+
+	  <div class="alert alert-danger">
+
+	    <i class="fa fa-triagle"></i> {{ Session::get('error_msg') }}
+	  </div>
+
+	@endif		
 
 
 		<div class="panel panel-default no-print">
@@ -37,7 +58,6 @@
 						@if($branch_details->main == '1')
 							@foreach(App\Branch::all() as $branch)
 
-
 								@if(@$_REQUEST['branch_no'] == $branch->branch_no)
 									<option selected value="{{ $branch->branch_no }}">{{ $branch->branch_name }}</option>
 								@else
@@ -45,6 +65,13 @@
 								@endif
 
 							@endforeach
+
+							@if(@$_REQUEST['branch_no'] == 'none')
+								<option selected value="none">None</option>
+							@else
+								<option value="none">None</option>
+							@endif
+
 						@else
 							<option value="{{ $branch_details->branch_no }}">{{ $branch_details->branch_name }}</option>
 						@endif		
@@ -54,7 +81,7 @@
 						</select>
 					</div>
 					
-					<button type="submit" class="btn btn-warning btn-flat">Generate</button>
+					<button type="submit" value="1" name="generate" class="btn btn-warning btn-flat">Generate</button>
 
 					<span class="text-primary pull-right"> <a data-toggle="collapse" href="#panel_filter">Show Columns</a> <i class="fa fa-arrow-down"></i></span>
 			
@@ -149,7 +176,7 @@
 				             <th class="text-left">Reference</th>
 				             <th class="text-center">Com</th>
 				             <th class="text-center">Amount</th>
-				             <th class="text-center">Payout</th>
+				             <th class="text-center">Pay-out</th>
 				             <th class="text-center">Customer</th>
 				           </tr>
 				           </thead>
@@ -207,8 +234,9 @@
 				                  <th class="text-left">Reference</th>
 				                  <th class="text-center">Com</th>
 				                  <th class="text-center">Amount</th>
+				                  <th class="text-center">Pay-in</th>
 				                  <th class="text-center">Customer</th>
-				                  <th class="text-center no-print">Verification</th>
+				                  <th class="text-center no-print"></th>
 				                </tr>
 				                </thead>
 				                <tbody>
@@ -222,14 +250,25 @@
 				     				<td class="text-left">{{ $transaction->ref_no }}</td>
 				     				<td class="text-right">{{ number_format($transaction->com,2) }}</td>
 				     				<td class="text-right">{{ number_format($transaction->amount,2) }}</td>
+				     				<td class="text-right">
+				     					
+				     					@if($transaction->cash_amount == '')
+				     						<b>?</b>
+				     					@else
+				     						<span class=" text text-success">
+				     							{{ number_format($transaction->cash_amount,2) }}
+				     						</span>
+				     					@endif	
+
+				     				</td>
 				     				<td class="text-center">
 				     					{{ @$transaction->customer?$transaction->customer->getFullName():'None' }}</td>
 				     				<td class="text-center">
-				     					<button class="btn btn-primary">{{$transaction->cash_amount}}</button>
+				     					<a href='{{ route("transaction.verifysend",["tran_id"=> $transaction->tran_id]) }}' class="btn btn-primary">Edit</a>
 				     				</td>
 				     			</tr>
 
-
+				     		
 				                @endforeach
 				                
 				                <tr>
@@ -237,7 +276,18 @@
 				                	<td class="text-right"><strong>{{ number_format($sends->sum('com'),2) }}</strong></td>
 				                	<td class="text-right"><strong>{{ number_format($sends->sum('amount'),2) }}</strong></td>
 				                	<td class="text-center"></td>
-				                	<td class="text-center"></td>
+				                	<td class="text-center" colspan="2">
+				                		@if($branch_details->main == '1')
+				                			<form method="get" action="">
+				                				<input type="hidden" value="{{@$_REQUEST['date_from']}}" name="date_from">
+				                				<input type="hidden" value="{{@$_REQUEST['date_to']}}" name="date_to">
+
+				                				<button name="btn_verify"  value='1' class="form-control btn btn-primary">Verify All</button>
+				                				
+				                			</form>
+				                		@endif
+				                		
+				                	</td>
 				                </tr>
 
 				               

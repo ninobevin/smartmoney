@@ -141,6 +141,8 @@
              <ul class="treeview-menu">
                <li><a href=''><span>Settings</span></a></li>
                <li><a href=''><span>Profile</span></a></li>
+               <li><a href='{{ route("admin.users") }}'><span>Users</span></a></li>
+
              </ul>         
          </li>
 

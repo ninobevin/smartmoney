@@ -50,9 +50,12 @@
 
 							</div>
 
+							@if(@$_REQUEST['out'] != '1')
+
 							<div class="no-print">
 								<button type="button" data-toggle="modal" id='btnPayout' data-target="#confirmClaim" class="btn btn-primary pull-right"><i class="fa fa-handshake-o"></i> PAYOUT</button>
 							</div>
+							@endif
 
 
 

@@ -41,12 +41,12 @@
 			<div class="panel-heading">
 				<form class="form-inline" action="" method="get">
 					<div class="form-group">
-						<label for="date_from">From:</label>
-						<input type="date" value="{{ @$_REQUEST['date_from']?$_REQUEST['date_from']:\Carbon\Carbon::now()->format('Y-m-d') }}" name="date_from" class="form-control">
+						<label for="date_start">From:</label>
+						<input type="date" value="{{ @$_REQUEST['date_start']?$_REQUEST['date_start']:\Carbon\Carbon::now()->format('Y-m-d') }}" name="date_start" class="form-control">
 					</div>
 					<div class="form-group">
-						<label for="date_to">To:</label>
-						<input type="date" name='date_to' value="{{ @$_REQUEST['date_to']?$_REQUEST['date_to']:\Carbon\Carbon::now()->format('Y-m-d') }}" class="form-control">
+						<label for="date_end">To:</label>
+						<input type="date" name='date_end' value="{{ @$_REQUEST['date_end']?$_REQUEST['date_end']:\Carbon\Carbon::now()->format('Y-m-d') }}" class="form-control">
 					</div>
 					<div class="form-group">
 						
@@ -133,7 +133,7 @@
 
 					           		 <small class="pull-right col-sm-3">
 					                   	<span class="text-primary">From </span>
-					                   	{{ @$_REQUEST['date_from']?\Carbon\Carbon::parse($_REQUEST['date_from'])->format('F d Y'):\Carbon\Carbon::now()->format('F d Y') }}
+					                   	{{ @$_REQUEST['date_start']?\Carbon\Carbon::parse($_REQUEST['date_start'])->format('F d Y'):\Carbon\Carbon::now()->format('F d Y') }}
 					                   </small>
 					            
 					            
@@ -148,7 +148,7 @@
 					    	
 					            <small class="pull-right col-sm-3" >
 					            	<span class="text-primary">To </span>
-					            	{{ @$_REQUEST['date_to']?\Carbon\Carbon::parse($_REQUEST['date_to'])->format('F d Y'):\Carbon\Carbon::now()->format('F d Y') }}
+					            	{{ @$_REQUEST['date_end']?\Carbon\Carbon::parse($_REQUEST['date_end'])->format('F d Y'):\Carbon\Carbon::now()->format('F d Y') }}
 					            </small>
 					    	</div>
 					    </div>
@@ -244,6 +244,10 @@
 
 				                @foreach($sends as $transaction)
 
+				                <?php
+				                	$transaction->setCash();
+				                ?>
+
 				     			<tr>
 				     				<td>{{ $loop->iteration }}</td>
 				     				<td class="text-left">{{ $transaction->date }}</td>
@@ -275,12 +279,12 @@
 				                	<td colspan="3"></td>
 				                	<td class="text-right"><strong>{{ number_format($sends->sum('com'),2) }}</strong></td>
 				                	<td class="text-right"><strong>{{ number_format($sends->sum('amount'),2) }}</strong></td>
-				                	<td class="text-center"></td>
+				                	<td class="text-right"><strong>{{ number_format($sends->sum('cash'),2) }}</strong></td>
 				                	<td class="text-center" colspan="2">
 				                		@if($branch_details->main == '1')
 				                			<form method="get" action="">
-				                				<input type="hidden" value="{{@$_REQUEST['date_from']}}" name="date_from">
-				                				<input type="hidden" value="{{@$_REQUEST['date_to']}}" name="date_to">
+				                				<input type="hidden" value="{{@$_REQUEST['date_start']}}" name="date_start">
+				                				<input type="hidden" value="{{@$_REQUEST['date_end']}}" name="date_end">
 
 				                				<button name="btn_verify"  value='1' class="form-control btn btn-primary">Verify All</button>
 				                				

@@ -85,7 +85,6 @@ class TransactionController extends Controller
 
     public function verifysend(Request $request){
 
-
       if($request->has('btn_verify')){
 
         $save = Transaction::where('direction','=','0')
@@ -93,6 +92,12 @@ class TransactionController extends Controller
         $save->cash_amount = $request->cash_amount;
         $save->branch_no = $request->branch_no;
         $save->account = $request->account;
+
+
+
+        if(!empty($request->cust_id)){
+          $save->cust_id = $request->cust_id;
+        }
 
         if($save->save()){
 

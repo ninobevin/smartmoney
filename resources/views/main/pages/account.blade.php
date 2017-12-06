@@ -22,12 +22,12 @@
 			<div class="panel-heading">
 				<form class="form-inline" action="" method="get">
 					<div class="form-group">
-						<label for="date_from">From:</label>
-						<input type="date" value="{{ @$_REQUEST['date_from']?$_REQUEST['date_from']:\Carbon\Carbon::now()->format('Y-m-d') }}" name="date_from" class="form-control">
+						<label for="date_start">From:</label>
+						<input type="date" value="{{ @$_REQUEST['date_start']?$_REQUEST['date_start']:\Carbon\Carbon::now()->format('Y-m-d') }}" name="date_start" class="form-control">
 					</div>
 					<div class="form-group">
-						<label for="date_to">To:</label>
-						<input type="date" name='date_to' value="{{ @$_REQUEST['date_to']?$_REQUEST['date_to']:\Carbon\Carbon::now()->format('Y-m-d') }}" class="form-control">
+						<label for="date_end">To:</label>
+						<input type="date" name='date_end' value="{{ @$_REQUEST['date_end']?$_REQUEST['date_end']:\Carbon\Carbon::now()->format('Y-m-d') }}" class="form-control">
 					</div>
 					
 					<button type="submit" class="btn btn-warning btn-flat">Generate</button>
@@ -68,13 +68,13 @@
 					<small class="pull-right">
 					<span class="text-primary">To </span>
 					<i class="text-muted">
-					{{ @$_REQUEST['date_to']?\Carbon\Carbon::parse($_REQUEST['date_to'])->format('F d Y'):\Carbon\Carbon::now()->format('F d Y') }}
+					{{ @$_REQUEST['date_end']?\Carbon\Carbon::parse($_REQUEST['date_end'])->format('F d Y'):\Carbon\Carbon::now()->format('F d Y') }}
 					</i>
 					</small>
 					
 					<small class="pull-right" style="margin-right: 20px;">
 					<span class="text-primary">From </span>
-					<i class="text-muted">{{ @$_REQUEST['date_from']?\Carbon\Carbon::parse($_REQUEST['date_from'])->format('F d Y'):\Carbon\Carbon::now()->format('F d Y') }}
+					<i class="text-muted">{{ @$_REQUEST['date_start']?\Carbon\Carbon::parse($_REQUEST['date_start'])->format('F d Y'):\Carbon\Carbon::now()->format('F d Y') }}
 					</i>
 					</small>
 					
@@ -99,7 +99,7 @@
 
 					                      		 <small class="pull-right col-sm-3">
 					                              	<span class="text-primary">From </span>
-					                              	{{ @$_REQUEST['date_from']?\Carbon\Carbon::parse($_REQUEST['date_from'])->format('F d Y'):\Carbon\Carbon::now()->format('F d Y') }}
+					                              	{{ @$_REQUEST['date_start']?\Carbon\Carbon::parse($_REQUEST['date_start'])->format('F d Y'):\Carbon\Carbon::now()->format('F d Y') }}
 					                              </small>
 					                       
 					                       
@@ -120,7 +120,7 @@
 					    		
 					    	        <small class="pull-right col-sm-3" >
 					    	        	<span class="text-primary">To </span>
-					    	        	{{ @$_REQUEST['date_to']?\Carbon\Carbon::parse($_REQUEST['date_to'])->format('F d Y'):\Carbon\Carbon::now()->format('F d Y') }}
+					    	        	{{ @$_REQUEST['date_end']?\Carbon\Carbon::parse($_REQUEST['date_end'])->format('F d Y'):\Carbon\Carbon::now()->format('F d Y') }}
 					    	        </small>
 					    		</div>
 					    </div>

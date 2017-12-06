@@ -9,6 +9,11 @@ use Carbon\Carbon;
 
 use Auth;
 
+use App\NetworkCharge;
+use App\AgentCharge;
+use App\library\Application;
+
+
 use DB;
 class Transaction extends Model
 {
@@ -22,8 +27,21 @@ class Transaction extends Model
     private static $tablename = 'transaction_sm';
     protected $primaryKey = 'tran_id';
     public $timestamps = false;
+    public $cash = 0;
+
+    private $application;
+
+
+    public function __construct(){
+
+
+        $this->application = new Application;
+
+
+    }
 
     //protected $fillable = ['ref_no', 'amount', 'service_charge'];
+
 
 
      public function customer(){
@@ -54,19 +72,34 @@ class Transaction extends Model
     }
     public function updateCash(){
 
-        $appConfig = new library\Application;
 
-        $this->branch_no = $appConfig->getBranch()->branch_no;
-        $this->cash_amount = $appConfig->getSentCash($this->amount);
+        $this->setCash();        
 
+        //$appConfig = new library\Application;
+
+        $this->branch_no = $this->application->getBranch()->branch_no;
+        $this->cash_amount = $this->cash;
+
+
+    }
+    public function setCash(){
+
+        if($this->direction == '1' )
+
+            $this->cash = $this->amount;
+        else
+        $this->cash = $this->amount
+        + (AgentCharge::where('amount','>=',$this->amount)->first()['charge'] * 2)
+        + (NetworkCharge::where('amount','>=',$this->amount)->first()['charge'] * 2);
+                                                                                 
 
     }
     public function getCash(){
 
-        $appConfig = new library\Application;
+        
 
         
-        return $appConfig->getSentCash($this->amount);
+        return 0;//$application->getSentCash($this->amount);
 
 
     }

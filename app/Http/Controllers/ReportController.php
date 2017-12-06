@@ -38,9 +38,9 @@ class ReportController extends Controller
 
 
 
-        if($request->has('date_from')){
-            $claims = $claims->whereBetween('date_claimed',[Carbon::parse($request->date_from)->startOfDay(),Carbon::parse($request->date_to)->endOfDay()]);
-             $sends = $sends->whereBetween('date',[Carbon::parse($request->date_from)->startOfDay(),Carbon::parse($request->date_to)->endOfDay()]);
+        if($request->has('date_start')){
+            $claims = $claims->whereBetween('date_claimed',[Carbon::parse($request->date_start)->startOfDay(),Carbon::parse($request->date_end)->endOfDay()]);
+             $sends = $sends->whereBetween('date',[Carbon::parse($request->date_start)->startOfDay(),Carbon::parse($request->date_end)->endOfDay()]);
         }
         if($request->has('branch_no')){
 
@@ -67,7 +67,7 @@ class ReportController extends Controller
              $sent_loop = Transaction::where('status','3')
                 //->where('branch_no',$request->branch_no)
             ->whereNull('cash_amount')    
-            ->whereBetween('date',[Carbon::parse($request->date_from)->startOfDay(),Carbon::parse($request->date_to)->endOfDay()]);
+            ->whereBetween('date',[Carbon::parse($request->date_start)->startOfDay(),Carbon::parse($request->date_end)->endOfDay()]);
 
 
            // return dump($sent_loop->get());
@@ -118,11 +118,11 @@ class ReportController extends Controller
 
 
             
-            $date_from = isset($request->date_from) ? 
-                            Carbon::parse($request->date_from)->startOfDay()
+            $date_start = isset($request->date_start) ? 
+                            Carbon::parse($request->date_start)->startOfDay()
                          : Carbon::today()->toDateString();
-            $date_to =   isset($request->date_to) ? 
-                            Carbon::parse($request->date_to)->endOfDay()
+            $date_end =   isset($request->date_end) ? 
+                            Carbon::parse($request->date_end)->endOfDay()
                          : Carbon::today()->toDateString();
 
             $accounts = Account::all();
@@ -136,13 +136,13 @@ class ReportController extends Controller
                         
 
                 $transaction[] = Transaction::where('account',$account->account_no)
-                    ->whereBetween('date',[$date_from,$date_to])
+                    ->whereBetween('date',[$date_start,$date_end])
                     ->orderBy('date','asc')
                     ->get();    
 
             }
 
-                    $unidentified = Transaction::whereBetween('date',[$date_from,$date_to])-> orderBy('date','asc')    
+                    $unidentified = Transaction::whereBetween('date',[$date_start,$date_end])-> orderBy('date','asc')    
                     ->whereNull('account')
                     ->get();  
 
